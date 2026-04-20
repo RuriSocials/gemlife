@@ -4,6 +4,7 @@ import { Link, useLocation } from 'react-router-dom';
 const Navigation = () => {
   const location = useLocation();
   const [scrolled, setScrolled] = useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
   const isHome = location.pathname === '/';
 
   useEffect(() => {
@@ -14,30 +15,62 @@ const Navigation = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  // Close mobile menu on route change
+  useEffect(() => {
+    setMobileOpen(false);
+  }, [location.pathname]);
+
+  const navLinkClass = "font-body text-sm tracking-wider uppercase hover:text-accent transition-colors";
+  const mobileNavLinkClass = "font-body text-sm tracking-wider uppercase hover:text-accent transition-colors block py-3 border-b border-gray-100";
+
   return (
-    <nav className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 px-8 py-4 flex justify-center ${
-      scrolled || !isHome ? 'bg-white/90 backdrop-blur-md shadow-sm text-black' : 'bg-transparent text-black'
+    <nav className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${
+      scrolled || !isHome || mobileOpen ? 'bg-white/90 backdrop-blur-md shadow-sm text-black' : 'bg-transparent text-black'
     }`}>
-      <div className="w-full max-w-[1400px] flex justify-between items-center">
+      <div className="w-full max-w-[1400px] mx-auto px-6 md:px-8 py-4 flex justify-between items-center">
         <Link to="/" className="font-heading text-xl md:text-2xl font-bold tracking-[0.1em] uppercase">
           GEMLIFE.WORLD
         </Link>
+
+        {/* Desktop Nav */}
         <div className="hidden md:flex gap-8 items-center">
-          <Link to="/exhibitions" className="font-body text-sm tracking-wider uppercase hover:text-accent transition-colors">
-            Exhibitions
-          </Link>
+          <Link to="/exhibitions" className={navLinkClass}>Exhibitions</Link>
           <button 
             onClick={() => alert("Events & Shop coming soon!")}
-            className="font-body text-sm tracking-wider uppercase hover:text-accent transition-colors"
+            className={navLinkClass}
           >
             Events & Shop
           </button>
-          <Link to="/journal" className="font-body text-sm tracking-wider uppercase hover:text-accent transition-colors">
-            Journal
-          </Link>
-          <Link to="/membership" className="border border-black px-5 py-2 font-body text-sm uppercase tracking-wider hover:bg-black hover:text-white transition-all duration-300">
-            Log In / Join
-          </Link>
+          <Link to="/journal" className={navLinkClass}>Journal</Link>
+          <Link to="/membership" className={navLinkClass}>Login / Join</Link>
+        </div>
+
+        {/* Mobile Hamburger Button */}
+        <button 
+          className="md:hidden flex flex-col gap-[5px] p-2 -mr-2"
+          onClick={() => setMobileOpen(!mobileOpen)}
+          aria-label="Toggle menu"
+        >
+          <span className={`block w-5 h-[2px] bg-black transition-all duration-300 ${mobileOpen ? 'rotate-45 translate-y-[7px]' : ''}`} />
+          <span className={`block w-5 h-[2px] bg-black transition-all duration-300 ${mobileOpen ? 'opacity-0' : ''}`} />
+          <span className={`block w-5 h-[2px] bg-black transition-all duration-300 ${mobileOpen ? '-rotate-45 -translate-y-[7px]' : ''}`} />
+        </button>
+      </div>
+
+      {/* Mobile Menu Panel */}
+      <div className={`md:hidden overflow-hidden transition-all duration-300 bg-white/95 backdrop-blur-md ${
+        mobileOpen ? 'max-h-[400px] border-t border-gray-100' : 'max-h-0'
+      }`}>
+        <div className="px-6 py-4 flex flex-col">
+          <Link to="/exhibitions" className={mobileNavLinkClass}>Exhibitions</Link>
+          <button 
+            onClick={() => alert("Events & Shop coming soon!")}
+            className={`${mobileNavLinkClass} text-left`}
+          >
+            Events & Shop
+          </button>
+          <Link to="/journal" className={mobileNavLinkClass}>Journal</Link>
+          <Link to="/membership" className={`${mobileNavLinkClass} border-b-0`}>Login / Join</Link>
         </div>
       </div>
     </nav>

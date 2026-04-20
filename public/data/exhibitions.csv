@@ -1,0 +1,6 @@
+id,category,title,subtitle,date,image,description,link,status
+1,major,"The Ruby Family's Gem Life: Three-Generation History",Special Exhibition,"February 1, 2026 – May 30, 2026","https://images.unsplash.com/photo-1515377905703-c4788e51af15?q=80&w=2670&auto=format&fit=crop","A 136-year journey through a single family's passion for the King of Gems.",/exhibitions/1,
+2,major,"Gem Life: Starting with Raw Stones",Special Exhibition,"February 1, 2026 – May 30, 2026","https://images.unsplash.com/photo-1615655114865-4cc1bda5901e?q=80&w=2574&auto=format&fit=crop","Discover the untouched beauty of gemstones before they meet the cutter's wheel.",/exhibitions/2,
+3,minor,"Sri Lanka Gem Universe Nature Faith",Notice,"June 2026 -","https://images.unsplash.com/photo-1596918667676-e1e5504859f7?q=80&w=2574&auto=format&fit=crop",,,Upcoming
+4,minor,XXXX,Archive,,"https://images.unsplash.com/photo-1605100804763-247f67b3557e?q=80&w=2670&auto=format&fit=crop",,,Archive
+5,minor,XXXX,Archive,,"https://images.unsplash.com/photo-1590549420953-27e466c92d52?q=80&w=2670&auto=format&fit=crop",,,Archive

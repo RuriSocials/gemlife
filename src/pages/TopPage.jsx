@@ -1,8 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { EXHIBITIONS } from '../data/exhibitions';
-import { EVENTS } from '../data/events';
-import { STORIES } from '../data/stories';
+import { useCsvData } from '../hooks/useCsvData';
+import NoteEmbed from '../components/NoteEmbed';
 
 const Hero = () => {
   return (
@@ -33,55 +32,79 @@ const Hero = () => {
         </div>
       </div>
       
-      {/* Background texture or subtle element */}
-      <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10 pointer-events-none" />
+      {/* Background texture — pure CSS dot pattern, no external dependency */}
+      <div className="absolute inset-0 pointer-events-none opacity-[0.06]" style={{ backgroundImage: 'radial-gradient(circle, #000 1px, transparent 1px)', backgroundSize: '24px 24px' }} />
     </section>
   );
 };
 
-const ExhibitionSection = () => (
-  <section className="py-24 bg-bg text-white">
-    <div className="max-w-[1200px] mx-auto px-4">
-      <h2 className="font-heading text-3xl mb-12 border-l-4 border-accent pl-4">Special Exhibition</h2>
-      
-      {/* Major Exhibitions - 2 Column */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
-        {EXHIBITIONS.major.map(ex => (
-          <Link to={ex.link} key={ex.id} className="group block bg-[#1a2b3c] overflow-hidden relative aspect-[4/3] transition-transform hover:-translate-y-1 duration-300">
-             <img src={ex.image} alt={ex.title} className="w-full h-full object-cover opacity-60 group-hover:opacity-40 transition-opacity duration-300" />
-             <div className="absolute inset-0 p-8 flex flex-col justify-center">
-                <span className="text-accent text-xs tracking-wider uppercase mb-2 border border-accent w-max px-2 py-0.5">{ex.subtitle}</span>
-                <h3 className="text-2xl font-bold mb-2 leading-tight">{ex.title}</h3>
-                <p className="text-sm text-gray-300 mb-4">{ex.date}</p>
-             </div>
-          </Link>
-        ))}
-      </div>
+const ExhibitionSection = ({ exhibitions }) => {
+  const major = exhibitions.filter(e => e.category === 'major');
+  const minor = exhibitions.filter(e => e.category === 'minor');
 
-      {/* Minor/Archive Exhibitions - 3 Column */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-        {EXHIBITIONS.minor.map(ex => (
-          <div key={ex.id} className="bg-[#1a2b3c] aspect-square relative group overflow-hidden">
-             {ex.image && <img src={ex.image} alt={ex.title} className="w-full h-full object-cover opacity-50 transition-transform duration-500 group-hover:scale-110" />}
-             <div className="absolute inset-0 p-6 flex flex-col justify-end bg-gradient-to-t from-black/80 to-transparent">
-                <span className="block text-xs uppercase tracking-wider text-accent mb-1">{ex.subtitle}</span>
-                <h4 className="font-bold text-lg leading-tight">{ex.title}</h4>
-                {ex.date && <p className="text-xs text-gray-400 mt-1">{ex.date}</p>}
-                {!ex.date && <p className="text-xs text-gray-500 mt-1">{ex.status}</p>}
-             </div>
-          </div>
-        ))}
-      </div>
-    </div>
-  </section>
-);
+  return (
+    <section className="py-24 bg-[#ffffff] text-black border-y border-white/10">
+      <div className="max-w-[1200px] mx-auto px-4">
+        <h2 className="font-heading text-3xl mb-12 border-l-4 border-accent pl-4 text-black">Special Exhibition</h2>
+        
+        {/* Major Exhibitions - 2 Column Split Card */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
+          {major.map(ex => (
+            <Link to={ex.link || `/exhibitions/${ex.id}`} key={ex.id} className="group block bg-white overflow-hidden shadow-lg transition-transform hover:-translate-y-1 duration-300">
+               {/* Image Top Half */}
+               <div className="relative aspect-[4/3] overflow-hidden bg-gray-100">
+                 {ex.image ? (
+                   <img src={ex.image} alt={ex.title} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+                 ) : (
+                   <div className="w-full h-full flex items-center justify-center bg-gray-200 text-gray-400 font-heading text-xl">Image Unavailable</div>
+                 )}
+               </div>
+               
+               {/* Text Bottom Half */}
+               <div className="p-8 md:p-10 flex flex-col justify-center bg-white">
+                  <span className="text-accent text-[10px] sm:text-xs font-bold tracking-[0.2em] uppercase mb-4 border-b border-accent pb-1 w-max">{ex.subtitle}</span>
+                  <h3 className="text-2xl md:text-3xl font-heading mb-4 leading-tight text-gray-900 group-hover:text-accent transition-colors">{ex.title}</h3>
+                  <p className="text-sm font-body text-gray-500 tracking-wide">{ex.date || ex.status}</p>
+               </div>
+            </Link>
+          ))}
+        </div>
 
-const EventsSection = () => (
+        {/* Minor/Archive Exhibitions - 3 Column Split Card */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
+          {minor.map(ex => (
+            <div key={ex.id} className="bg-white group overflow-hidden shadow-md">
+               {/* Image Top Half */}
+               <div className="aspect-[4/3] relative overflow-hidden bg-gray-100 border-b border-gray-100">
+                 {ex.image ? (
+                   <img src={ex.image} alt={ex.title} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
+                 ) : (
+                   <div className="w-full h-full bg-gradient-to-br from-[#1a2b3c] to-[#2c3e50] flex flex-col items-center justify-center p-6 text-center">
+                      <span className="font-heading text-white/50 text-xl tracking-widest">{ex.title.substring(0,2)}</span>
+                   </div>
+                 )}
+               </div>
+
+               {/* Text Bottom Half */}
+               <div className="p-6 bg-white min-h-[140px] flex flex-col justify-start">
+                  <span className="block text-[10px] font-bold uppercase tracking-widest text-accent mb-2">{ex.subtitle}</span>
+                  <h4 className="font-heading font-medium text-lg leading-snug text-gray-900 mb-2">{ex.title}</h4>
+                  <p className="text-xs font-body text-gray-500 uppercase tracking-widest">{ex.date || ex.status}</p>
+               </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+};
+
+const EventsSection = ({ events }) => (
   <section className="py-24 bg-white text-black">
     <div className="max-w-[1200px] mx-auto px-4">
       <h2 className="font-heading text-3xl mb-12 border-l-4 border-accent pl-4">Event</h2>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-        {EVENTS.map(event => (
+        {events.map(event => (
           <div key={event.id} className="flex flex-col gap-4">
             <div className="aspect-video bg-gray-100 overflow-hidden relative group">
                <img src={event.image} alt={event.title} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
@@ -112,11 +135,7 @@ const EventsSection = () => (
   </section>
 );
 
-import { JOURNAL_ENTRIES } from '../data/journal';
-
-// ... existing code ...
-
-const JournalSection = () => (
+const JournalSection = ({ journal }) => (
   <section className="py-24 bg-surface text-black">
     <div className="max-w-[1200px] mx-auto px-4">
       <div className="mb-12 border-l-4 border-accent pl-4">
@@ -127,29 +146,10 @@ const JournalSection = () => (
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        {JOURNAL_ENTRIES.map(post => (
-          <a href={post.link} key={post.id} target="_blank" rel="noopener noreferrer" className="group block bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-all duration-300">
-             <div className="aspect-video overflow-hidden relative">
-               <img src={post.image} alt={post.title} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
-               {post.date && <span className="absolute bottom-2 right-2 bg-black/70 text-white text-[10px] px-2 py-1 rounded">{post.date}</span>}
-             </div>
-             <div className="p-4">
-               <h3 className="font-bold text-sm mb-2 line-clamp-2 leading-snug group-hover:text-accent transition-colors">
-                 {post.title}
-               </h3>
-               <div className="flex items-center gap-2 mt-3">
-                 {post.avatar ? (
-                   <img src={post.avatar} alt={post.author} className="w-5 h-5 rounded-full" />
-                 ) : (
-                   <div className="w-5 h-5 rounded-full bg-gray-200" />
-                 )}
-                 <span className="text-xs text-gray-500 truncate">{post.author}</span>
-                 <div className="ml-auto flex items-center gap-1 text-gray-400 text-xs">
-                   <span>♥</span> {post.likes}
-                 </div>
-               </div>
-             </div>
-          </a>
+        {journal.map(post => (
+          <div key={post.id} className="w-full flex justify-center">
+            <NoteEmbed embedUrl={post.embedUrl} />
+          </div>
         ))}
       </div>
 
@@ -165,14 +165,14 @@ const JournalSection = () => (
   </section>
 );
 
-const StoriesSection = () => (
+const StoriesSection = ({ stories }) => (
   <section className="py-24 bg-white text-black">
     <div className="max-w-[1200px] mx-auto px-4">
       <h2 className="font-heading text-3xl mb-12 border-l-4 border-accent pl-4">Highlighted Stories</h2>
       
       {/* Specific 2-column layout for the 2 featured stories */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-16">
-        {STORIES.map((story, index) => (
+        {stories.map((story) => (
           <div key={story.id} className="flex flex-col gap-6">
             <div className="flex items-center gap-4 mb-2">
                {/* Icon placeholder or thumbnail */}
@@ -208,13 +208,26 @@ const StoriesSection = () => (
 );
 
 const TopPage = () => {
+  const { data: exhibitions, loading: exLoading } = useCsvData('/data/exhibitions.csv');
+  const { data: events, loading: evLoading } = useCsvData('/data/events.csv');
+  const { data: journal, loading: joLoading } = useCsvData('/data/journal.csv');
+  const { data: stories, loading: stLoading } = useCsvData('/data/stories.csv');
+
+  const isLoading = exLoading || evLoading || joLoading || stLoading;
+
   return (
     <div className="bg-bg">
       <Hero />
-      <ExhibitionSection />
-      <EventsSection />
-      <JournalSection />
-      <StoriesSection />
+      {isLoading ? (
+        <div className="flex items-center justify-center py-24 text-gray-400 text-sm uppercase tracking-widest">Loading content...</div>
+      ) : (
+        <>
+          <ExhibitionSection exhibitions={exhibitions} />
+          <EventsSection events={events} />
+          <JournalSection journal={journal} />
+          <StoriesSection stories={stories} />
+        </>
+      )}
     </div>
   );
 };
