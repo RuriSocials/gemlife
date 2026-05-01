@@ -4,18 +4,18 @@ import { useCsvData } from "../hooks/useCsvData";
 import NoteEmbed from "../components/NoteEmbed";
 
 const gridImages = [
-  "/src/assets/images/Main content -img1.jpg",
-  "/src/assets/images/Main content -img2.jpg",
-  "/src/assets/images/Main content -img3.png",
-  "/src/assets/images/Main content -img4.png",
-  "/src/assets/images/Main content -img1.jpg",
-  "/src/assets/images/Main content -img2.jpg",
-  "/src/assets/images/Main content -img3.png",
-  "/src/assets/images/Main content -img4.png",
-  "/src/assets/images/Main content -img1.jpg",
-  "/src/assets/images/Main content -img2.jpg",
-  "/src/assets/images/Main content -img3.png",
-  "/src/assets/images/Main content -img4.png",
+  "/src/assets/images/topPage/MC1.png",
+  "/src/assets/images/topPage/MC2.png",
+  "/src/assets/images/topPage/MC3.png",
+  "/src/assets/images/topPage/MC4.png",
+  "/src/assets/images/topPage/MC5.png",
+  "/src/assets/images/topPage/MC6.png",
+  "/src/assets/images/topPage/MC7.png",
+  "/src/assets/images/topPage/MC8.png",
+  "/src/assets/images/topPage/MC9.png",
+  "/src/assets/images/topPage/MC10.png",
+  "/src/assets/images/topPage/MC11.png",
+  "/src/assets/images/topPage/MC12.png",
 ];
 
 const Hero = () => {
@@ -267,7 +267,7 @@ const StoriesSection = ({ stories }) => (
               {/* Icon placeholder or thumbnail */}
               <div className="w-12 h-12 rounded-full overflow-hidden bg-gray-100">
                 <img
-                  src={story.image}
+                  src={story.titelImage}
                   className="w-full h-full object-cover"
                   alt="Author"
                 />
@@ -283,7 +283,7 @@ const StoriesSection = ({ stories }) => (
             <div className="flex flex-col md:flex-row gap-6">
               <div className="md:w-1/2 aspect-square bg-gray-100 overflow-hidden relative">
                 <img
-                  src={story.image}
+                  src={story.mainImage}
                   alt={story.title}
                   className="w-full h-full object-cover"
                 />
