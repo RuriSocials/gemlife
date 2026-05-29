@@ -96,9 +96,9 @@ const StaticPage = () => {
   if (!page) return <div className="p-24 text-center">Page not found</div>;
 
   return (
-    <div className="min-h-screen bg-bg py-24 px-4">
+    <div className="min-h-screen bg-bg py-10 md:py-24 px-4">
       <div className="max-w-[800px] mx-auto">
-         <h1 className="font-heading text-4xl mb-8 border-b border-gray-200 pb-4">{page.title}</h1>
+         <h1 className="font-heading text-2xl md:text-4xl mb-6 border-b border-gray-200 pb-4">{page.title}</h1>
          <div className="space-y-6 text-secondary leading-relaxed">
            {page.sections.map((section, idx) => (
              <div key={idx}>

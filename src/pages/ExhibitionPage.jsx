@@ -58,7 +58,7 @@ function SceneCard({ scene, reverse = false }) {
           <img
             src={scene.image}
             alt={scene.title}
-            className="h-[420px] w-full object-cover"
+            className="h-[220px] md:h-[420px] w-full object-cover"
           />
         </div>
       </div>
@@ -195,7 +195,7 @@ export default function ExhibitionPage() {
           {/* ─── Stats ─── */}
           {details.stats && details.stats.length > 0 && (
             <section className="mx-auto max-w-7xl px-6 py-12 md:px-10 md:py-20">
-              <div className="grid gap-4 md:grid-cols-4">
+              <div className="grid gap-4 grid-cols-2 md:grid-cols-4">
                 {details.stats.map((stat) => {
                   const Icon = ICON_MAP[stat.iconName] || Gem;
                   return (
@@ -228,8 +228,8 @@ export default function ExhibitionPage() {
             {details.culturalBackground && (
               <section className="rounded-[2rem] border border-black/5 bg-white px-6 py-10 shadow-xl shadow-slate-200/40 md:px-10 md:py-14">
                 <SectionHeading
-                  eyebrow="Cultural Background"
-                  title="Context & History"
+                  eyebrow="文化的背景 — Cultural Background"
+                  title="背景と歴史"
                 />
                 <div className="mt-8 grid gap-6 md:grid-cols-[1fr_0.4fr]">
                   <div className="space-y-4">
@@ -256,10 +256,20 @@ export default function ExhibitionPage() {
                       </motion.div>
                     )}
                   </div>
-                  {/* Visual accent element to fill the right column instead of text instructions */}
-                  <div className="hidden md:flex rounded-[1.75rem] border border-black/5 bg-[#0f0f10] items-center justify-center p-6 shadow-lg">
-                    <Gem className="h-16 w-16 text-[#c6a96a]/20" strokeWidth={1} />
-                  </div>
+                  {/* Context & History image */}
+                  {details.culturalBackgroundImage ? (
+                    <div className="hidden md:block rounded-[1.75rem] overflow-hidden border border-black/5 shadow-lg">
+                      <img
+                        src={details.culturalBackgroundImage}
+                        alt="Cultural Background"
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+                  ) : (
+                    <div className="hidden md:flex rounded-[1.75rem] border border-black/5 bg-[#0f0f10] items-center justify-center p-6 shadow-lg">
+                      <Gem className="h-16 w-16 text-[#c6a96a]/20" strokeWidth={1} />
+                    </div>
+                  )}
                 </div>
               </section>
             )}
@@ -284,10 +294,10 @@ export default function ExhibitionPage() {
                 className="mt-10 rounded-[2rem] border border-black/5 bg-white px-6 py-10 shadow-xl shadow-slate-200/40 md:px-10 md:py-14"
               >
                 <SectionHeading
-                  eyebrow="Timeline"
-                  title="A legacy shaped across generations"
+                  eyebrow="タイムライン — Timeline"
+                  title="世代を超えて形づくられた遺産"
                 />
-                <div className="mt-10 grid gap-6 md:grid-cols-5">
+                <div className="mt-10 grid gap-6 grid-cols-2 md:grid-cols-5">
                   {details.timeline.map((item, i) => (
                     <div key={item.year} className="relative">
                       <div className="flex items-center gap-3">
@@ -310,8 +320,8 @@ export default function ExhibitionPage() {
                 <div className="rounded-[2rem] border border-black/5 bg-[#0f0f10] text-white shadow-xl shadow-slate-200/40">
                   <div className="p-6 md:p-8">
                     <SectionHeading
-                      eyebrow="Story Geography"
-                      title="Locations of living culture"
+                      eyebrow="物語の地理 — Story Geography"
+                      title="暮らしと文化が息づく場所"
                       theme="dark"
                     />
                     <div className="mt-8 space-y-3">
@@ -326,10 +336,10 @@ export default function ExhibitionPage() {
                           }`}
                         >
                           <div>
-                            <div className="text-sm font-medium text-white">
+                            <div className="text-xs md:text-sm font-medium text-white">
                               {loc.name}
                             </div>
-                            <div className={`text-xs uppercase tracking-[0.16em] ${activeLocation.name === loc.name ? "text-[#c6a96a]" : "text-white/55"}`}>
+                            <div className={`text-[10px] md:text-xs uppercase tracking-[0.16em] ${activeLocation.name === loc.name ? "text-[#c6a96a]" : "text-white/55"}`}>
                               {loc.role}
                             </div>
                           </div>
@@ -368,7 +378,7 @@ export default function ExhibitionPage() {
                         loading="lazy" 
                         allowFullScreen 
                         referrerPolicy="no-referrer-when-downgrade" 
-                        src={`https://maps.google.com/maps?q=${encodeURIComponent(activeLocation.name + ', Sri Lanka')}&t=&z=11&ie=UTF8&iwloc=&output=embed`}
+                        src={`https://maps.google.com/maps?q=${encodeURIComponent((activeLocation.mapQuery || activeLocation.name) + ', Sri Lanka')}&t=&z=11&ie=UTF8&iwloc=&output=embed`}
                       ></iframe>
                       
                       {/* Subtle loading state background that shows before iframe loads */}
@@ -384,7 +394,7 @@ export default function ExhibitionPage() {
               <section className="mt-14 rounded-[2rem] border border-black/5 bg-gradient-to-br from-slate-950 via-slate-900 to-[#1c2d5a] px-6 py-12 text-white shadow-2xl md:px-10 md:py-16">
                 <div className="max-w-3xl">
                   <div className="text-xs uppercase tracking-[0.24em] text-[#c6a96a]">
-                    Conclusion
+                    結び — Conclusion
                   </div>
                   <h2
                     className="mt-4 text-4xl font-semibold md:text-5xl"
