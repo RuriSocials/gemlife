@@ -1,6 +1,3 @@
 id,category,title,subtitle,date,image,description,link,status
-1,major,"The Ruby Family's Gem Life: Three-Generation History",Special Exhibition,"February 1, 2026 – May 30, 2026","../src/assets//images/specialExhibition/The Ruby Family's Gem Life.png","A 136-year journey through a single family's passion for the King of Gems.",/exhibitions/1,
-2,major,"Gem Life: Starting with Raw Stones",Special Exhibition,"February 1, 2026 – May 30, 2026","../src/assets//images/specialExhibition/Gem Life Starting with Raw Stones.png","Discover the untouched beauty of gemstones before they meet the cutter's wheel.",/exhibitions/2,
-3,minor,"Sri Lanka Gem Universe Nature Faith",Notice,"June 2026 -","../src/assets//images/specialExhibition/Sri Lanka Gem Universe Nature Faith.png",,,Upcoming
-4,minor,XXXX,Archive,,"../src/assets//images/specialExhibition/Sri Lanka Gem Universe Nature Faith.png",,,Archive
-5,minor,XXXX,Archive,,"../src/assets//images/specialExhibition/Sri Lanka Gem Universe Nature Faith.png",,,Archive
+1,major,"The Ruby Family's Gem Life: Three-Generation History — Ruby家の三世代にわたる歴史",Special Exhibition,"5/29/2026-7/14/2026","../src/assets//images/specialExhibition/Mr.Rubi.png","「King of Gems」への情熱とともに歩んだ、136年にわたる家族の物語。",/exhibitions/1,
+2,major,"Gem Life: Starting with Raw Stones — 原石から始まる Gem Life",Special Exhibition,"現在準備中です","../src/assets/images/specialExhibition/Crystal inclusions.JPG","Discover the untouched beauty of gemstones before they meet the cutter's wheel.",/exhibitions/2,
