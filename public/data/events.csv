@@ -1,5 +1,5 @@
 id,title,englishTitle,subtitle,date,description,image,link,type
-1,大粒原石から宝石をオーダーカット体験,Cut to order gem from rough stone,企画展ショップ (Special Exhibition Shop),Starts 3/1 (Tentative),スリランカ産のスピネルやコーネルピン等の大粒原石限定16個のオーダーカット販売をMakuakeにて3/1（予定）から行います。,"../src/assets/images/eventPage/event1.png",#,makuake
-2,Ruby Clement Collection限定イヤリング,Ruby Clement Collection Limited Earrings,企画展ショップ (Special Exhibition Shop),Starts 3/1 (Tentative),Ruby Clement コレクションからRURIのジュエリーデザイナーが現地で選んだ宝石で制作した世界で一つのオリジナル片耳イヤリング6個をMakuakeにて3/1（予定）から販売します。,"../src/assets/images/eventPage/event2.png",#,makuake
-3,宝石定期講座,Gemstone Periodic Course,メンバー限定（予告） (Member Exclusive),Monthly,専門学校で宝石学を教えているRURIの宝石鑑定士とその仲間たちが月1回宝石に関する講座を開催します。詳細は後日発表します。,"../src/assets/images/eventPage/event3.png",/membership,member
-4,コラボ企画 / 鎌倉宝石・ジュエリー販売会,Kamakura Gem & Jewelry Sale,メンバー限定（予告） (Member Exclusive),Coming Soon,Collaboration event in Kamakura. Details coming soon.,"../src/assets/images/eventPage/event4.png",/membership,member
+1,大粒原石から宝石をオーダーカット体験,Cut to order gem from rough stone,企画展ショップ (Makuake先行販売),5/29から,スリランカ産のスピネルやコーネルピン等の大粒原石限定16個のオーダーカット販売をMakuakeにて5/29から行います。,"../src/assets/images/eventPage/Cut to Order section.png",https://www.makuake.com/project/ruri_jewels/,makuake
+2,Ruby Clement Collection限定イヤリング,Ruby Clement Collection Limited Earrings,企画展ショップ,5/29から,Ruby Clement コレクションからRURIのジュエリーデザイナーが現地で選んだ宝石で制作した世界で一つのオリジナル片耳イヤリング6個をMakuakeにて5/29から販売します。,"../src/assets/images/eventPage/event2.png",https://www.makuake.com/project/ruri_jewels/,makuake
+3,宝石定期講座,Gemstone Periodic Course,メンバー限定（予告）,近日公開,専門学校で宝石学を教えているRURIの宝石鑑定士とその仲間たちが宝石に関する講座を開催します。詳細は後日発表します。,"../src/assets/images/eventPage/Gemstone Periodic Course.jpg",,member
+4,コラボ企画 / 鎌倉宝石・ジュエリー販売会,Kamakura Gem & Jewelry Sale,メンバー限定（予告）,近日公開,倉でのコラボレーションイベント開催予定。詳細は近日公開。,"../src/assets/images/eventPage/event4.png",,member
