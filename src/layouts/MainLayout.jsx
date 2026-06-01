@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import ruriLogo from '../assets/images/logo/RURILogo完成-11.png';
 
 const ComingSoonModal = ({ onClose }) => (
   <div
@@ -51,12 +50,40 @@ const ComingSoonModal = ({ onClose }) => (
   </div>
 );
 
+const NavLink = ({ to, children, active, className = '' }) => (
+  <Link
+    to={to}
+    className={`relative group font-body text-[11px] tracking-[0.18em] uppercase transition-colors duration-200 ${
+      active ? 'text-accent' : 'text-black hover:text-accent'
+    } ${className}`}
+  >
+    {children}
+    {/* Sliding underline */}
+    <span
+      className={`absolute -bottom-[3px] left-0 h-[1.5px] bg-accent transition-all duration-300 ${
+        active ? 'w-full' : 'w-0 group-hover:w-full'
+      }`}
+    />
+  </Link>
+);
+
+const NavButton = ({ onClick, children, className = '' }) => (
+  <button
+    onClick={onClick}
+    className={`relative group font-body text-[11px] tracking-[0.18em] uppercase transition-colors duration-200 text-black hover:text-accent ${className}`}
+  >
+    {children}
+    <span className="absolute -bottom-[3px] left-0 h-[1.5px] bg-accent transition-all duration-300 w-0 group-hover:w-full" />
+  </button>
+);
+
 const Navigation = () => {
   const location = useLocation();
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [showComingSoon, setShowComingSoon] = useState(false);
   const isHome = location.pathname === '/';
+  const isOpaque = scrolled || !isHome || mobileOpen;
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 50);
@@ -64,68 +91,121 @@ const Navigation = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  useEffect(() => {
-    setMobileOpen(false);
-  }, [location.pathname]);
+  useEffect(() => { setMobileOpen(false); }, [location.pathname]);
 
-  // Prevent background scroll when modal is open
   useEffect(() => {
-    document.body.style.overflow = showComingSoon ? 'hidden' : '';
+    document.body.style.overflow = showComingSoon || mobileOpen ? 'hidden' : '';
     return () => { document.body.style.overflow = ''; };
-  }, [showComingSoon]);
+  }, [showComingSoon, mobileOpen]);
 
-  const navLinkClass = "font-body text-sm tracking-wider uppercase hover:text-accent transition-colors";
-  const mobileNavLinkClass = "font-body text-sm tracking-wider uppercase hover:text-accent transition-colors block py-3 border-b border-gray-100";
+  const isActive = (path) =>
+    path === '/' ? location.pathname === '/' : location.pathname.startsWith(path);
+
+  const mobileItemBase =
+    'font-body text-[11px] tracking-[0.18em] uppercase py-4 border-b border-gray-100 flex items-center justify-between transition-colors duration-200';
 
   return (
     <>
-      <nav className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${
-        scrolled || !isHome || mobileOpen ? 'bg-white/90 backdrop-blur-md shadow-sm text-black' : 'bg-transparent text-black'
-      }`}>
-        <div className="w-full max-w-[1400px] mx-auto px-6 md:px-8 py-4 flex justify-between items-center">
-          <Link to="/" aria-label="Gemlife.world home">
-            <img src={ruriLogo} alt="RURI Logo" className="h-10 w-auto object-contain" />
-          </Link>
+      <nav
+        className={`fixed top-0 left-0 w-full z-50 transition-all duration-500 ${
+          isOpaque
+            ? 'bg-white/95 backdrop-blur-md shadow-[0_1px_0_0_rgba(0,0,0,0.06)]'
+            : 'bg-transparent'
+        }`}
+      >
+        {/* Top accent line — only when opaque */}
+        <div
+          className={`absolute top-0 left-0 w-full h-[2px] bg-accent transition-opacity duration-500 ${
+            isOpaque ? 'opacity-100' : 'opacity-0'
+          }`}
+        />
 
-          {/* Desktop Nav */}
-          <div className="hidden md:flex gap-8 items-center">
-            <Link to="/exhibitions" className={navLinkClass}>Exhibitions</Link>
-            <button
-              onClick={() => setShowComingSoon(true)}
-              className={navLinkClass}
+        <div className="w-full max-w-[1400px] mx-auto px-6 md:px-10 py-[18px] flex justify-end items-center">
+
+          {/* Desktop links */}
+          <div className="hidden md:flex items-center gap-8">
+            <NavLink to="/" active={isActive('/')}>Home</NavLink>
+            <NavLink to="/exhibitions" active={isActive('/exhibitions')}>Exhibitions</NavLink>
+            <NavButton onClick={() => setShowComingSoon(true)}>Events &amp; Shop</NavButton>
+            <NavLink to="/journal" active={isActive('/journal')}>Journal</NavLink>
+
+            {/* Login / Join — pill CTA */}
+            <Link
+              to="/membership"
+              className={`ml-2 font-body text-[11px] tracking-[0.18em] uppercase px-5 py-[9px] rounded-full border transition-all duration-300 ${
+                isActive('/membership')
+                  ? 'bg-accent border-accent text-white'
+                  : 'border-black text-black hover:bg-black hover:text-white'
+              }`}
             >
-              Events &amp; Shop
-            </button>
-            <Link to="/journal" className={navLinkClass}>Journal</Link>
-            <Link to="/membership" className={navLinkClass}>Login / Join</Link>
+              Login / Join
+            </Link>
           </div>
 
-          {/* Mobile Hamburger */}
+          {/* Mobile hamburger */}
           <button
-            className="md:hidden flex flex-col gap-[5px] p-2 -mr-2"
+            className="md:hidden relative w-8 h-8 flex flex-col justify-center items-center gap-[5px]"
             onClick={() => setMobileOpen(!mobileOpen)}
             aria-label="Toggle menu"
           >
-            <span className={`block w-5 h-[2px] bg-black transition-all duration-300 ${mobileOpen ? 'rotate-45 translate-y-[7px]' : ''}`} />
-            <span className={`block w-5 h-[2px] bg-black transition-all duration-300 ${mobileOpen ? 'opacity-0' : ''}`} />
-            <span className={`block w-5 h-[2px] bg-black transition-all duration-300 ${mobileOpen ? '-rotate-45 -translate-y-[7px]' : ''}`} />
+            <span
+              className={`block w-6 h-[1.5px] bg-black transition-all duration-300 origin-center ${
+                mobileOpen ? 'rotate-45 translate-y-[6.5px]' : ''
+              }`}
+            />
+            <span
+              className={`block w-6 h-[1.5px] bg-black transition-all duration-300 ${
+                mobileOpen ? 'opacity-0 scale-x-0' : ''
+              }`}
+            />
+            <span
+              className={`block w-6 h-[1.5px] bg-black transition-all duration-300 origin-center ${
+                mobileOpen ? '-rotate-45 -translate-y-[6.5px]' : ''
+              }`}
+            />
           </button>
         </div>
 
-        {/* Mobile Menu Panel */}
-        <div className={`md:hidden overflow-hidden transition-all duration-300 bg-white/95 backdrop-blur-md ${
-          mobileOpen ? 'max-h-[400px] border-t border-gray-100' : 'max-h-0'
-        }`}>
-          <div className="px-6 py-4 flex flex-col">
-            <Link to="/exhibitions" className={mobileNavLinkClass}>Exhibitions</Link>
+        {/* Mobile menu */}
+        <div
+          className={`md:hidden overflow-hidden transition-all duration-400 ease-in-out bg-white border-t border-gray-100 ${
+            mobileOpen ? 'max-h-[480px] opacity-100' : 'max-h-0 opacity-0'
+          }`}
+        >
+          <div className="px-6 pb-6 pt-2 flex flex-col">
+            {[
+              { label: 'Home', to: '/' },
+              { label: 'Exhibitions', to: '/exhibitions' },
+              { label: 'Journal', to: '/journal' },
+            ].map(({ label, to }) => (
+              <Link
+                key={to}
+                to={to}
+                className={`${mobileItemBase} ${
+                  isActive(to) ? 'text-accent' : 'text-black hover:text-accent'
+                }`}
+              >
+                {label}
+                {isActive(to) && (
+                  <span className="w-1.5 h-1.5 rounded-full bg-accent" />
+                )}
+              </Link>
+            ))}
+
             <button
               onClick={() => { setMobileOpen(false); setShowComingSoon(true); }}
-              className={`${mobileNavLinkClass} text-left`}
+              className={`${mobileItemBase} text-left text-black hover:text-accent`}
             >
               Events &amp; Shop
+              <span className="text-[9px] tracking-widest uppercase text-accent/70 font-bold">Soon</span>
             </button>
-            <Link to="/journal" className={mobileNavLinkClass}>Journal</Link>
-            <Link to="/membership" className={`${mobileNavLinkClass} border-b-0`}>Login / Join</Link>
+
+            <Link
+              to="/membership"
+              className="mt-5 w-full text-center font-body text-[11px] tracking-[0.18em] uppercase px-5 py-3 rounded-full bg-black text-white hover:bg-accent transition-colors duration-300"
+            >
+              Login / Join
+            </Link>
           </div>
         </div>
       </nav>
@@ -144,7 +224,6 @@ const Footer = () => (
 
         {/* Brand */}
         <div>
-          <img src={ruriLogo} alt="RURI Logo" className="h-10 w-auto mb-5 opacity-90" />
           <p className="text-secondary text-sm leading-relaxed max-w-[240px] mb-2">
             宝石をアートとして、その物語と想いを未来へ受け継ぐ。
           </p>
@@ -157,6 +236,7 @@ const Footer = () => (
         <div>
           <h4 className="text-accent text-[10px] font-bold uppercase tracking-[0.22em] mb-5">Explore</h4>
           <ul className="space-y-3">
+            <li><Link to="/" className="text-secondary hover:text-black text-sm transition-colors">Home</Link></li>
             <li><Link to="/exhibitions" className="text-secondary hover:text-black text-sm transition-colors">Exhibition</Link></li>
             <li><Link to="/journal" className="text-secondary hover:text-black text-sm transition-colors">Journal</Link></li>
             <li><Link to="/membership" className="text-secondary hover:text-black text-sm transition-colors">Login / Join</Link></li>

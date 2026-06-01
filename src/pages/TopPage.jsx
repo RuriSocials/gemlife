@@ -4,20 +4,20 @@ import { useCsvData } from "../hooks/useCsvData";
 import NoteEmbed from "../components/NoteEmbed";
 import { storyVideos } from "../data/storyVideos";
 
-const gridImages = [
-  "/src/assets/images/topPage/MC1.png",
-  "/src/assets/images/topPage/MC2.png",
-  "/src/assets/images/topPage/MC3.png",
-  "/src/assets/images/topPage/MC4.png",
-  "/src/assets/images/topPage/MC5.png",
-  "/src/assets/images/topPage/MC6.png",
-  "/src/assets/images/topPage/MC7.png",
-  "/src/assets/images/topPage/MC8.png",
-  "/src/assets/images/topPage/MC9.png",
-  "/src/assets/images/topPage/MC10.png",
-  "/src/assets/images/topPage/MC11.png",
-  "/src/assets/images/topPage/MC12.png",
-];
+import mc1  from "../assets/images/topPage/MC1.png";
+import mc2  from "../assets/images/topPage/MC2.png";
+import mc3  from "../assets/images/topPage/MC3.png";
+import mc4  from "../assets/images/topPage/MC4.png";
+import mc5  from "../assets/images/topPage/MC5.png";
+import mc6  from "../assets/images/topPage/MC6.png";
+import mc7  from "../assets/images/topPage/MC7.png";
+import mc8  from "../assets/images/topPage/MC8.png";
+import mc9  from "../assets/images/topPage/MC9.png";
+import mc10 from "../assets/images/topPage/MC10.png";
+import mc11 from "../assets/images/topPage/MC11.png";
+import mc12 from "../assets/images/topPage/MC12.png";
+
+const gridImages = [mc1, mc2, mc3, mc4, mc5, mc6, mc7, mc8, mc9, mc10, mc11, mc12];
 
 const Hero = () => {
   return (

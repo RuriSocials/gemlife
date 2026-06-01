@@ -2,13 +2,14 @@ import React, { useState } from 'react';
 import { useCsvData } from '../hooks/useCsvData';
 import NoteEmbed from '../components/NoteEmbed';
 
-import img1 from '../assets/images/hsPage/HST1.png';
 import img2 from '../assets/images/specialExhibition/The Land — Rathnapura.jpg';
 import img3 from '../assets/images/specialExhibition/Trust — Walawwa Culture.jpg';
 import img4 from '../assets/images/specialExhibition/Craft — Ruby Jewellers.JPG';
-import img5 from '../assets/images/hsPage/HST2.png';
 import img6 from '../assets/images/specialExhibition/Future — Ethical Sri Lanka.jpg';
 import img7 from '../assets/images/specialExhibition/Lives Intertwined — Balangoda.jpg';
+
+const img1 = '/images/hsPage/HST1.png';
+const img5 = '/images/hsPage/HST2.png';
 
 // Node positions are in SVG viewBox 0–100 coordinates (maps 1:1 to CSS percentages)
 const NODES = [
