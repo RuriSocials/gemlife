@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useMemo, useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import {
@@ -102,8 +102,7 @@ export default function ExhibitionPage() {
 
   const details = exhibition ? allExhibitionDetails[exhibition.id] : null;
 
-  // Initialize active location when details load
-  useMemo(() => {
+  useEffect(() => {
     if (details?.locations && !activeLocation) {
       setActiveLocation(details.locations[0]);
     }
@@ -298,7 +297,7 @@ export default function ExhibitionPage() {
                   title="世代を超えて形づくられた遺産"
                 />
                 <div className="mt-10 grid gap-6 grid-cols-2 md:grid-cols-5">
-                  {details.timeline.map((item, i) => (
+                  {details.timeline.map((item) => (
                     <div key={item.year} className="relative">
                       <div className="flex items-center gap-3">
                         <div className="flex h-10 w-10 items-center justify-center rounded-full bg-[#c6a96a] text-sm font-semibold text-slate-950 text-[10px] tracking-widest uppercase">
