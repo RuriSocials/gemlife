@@ -3,7 +3,7 @@ import { Link, useLocation } from 'react-router-dom';
 
 const ComingSoonModal = ({ onClose }) => (
   <div
-    className="fixed inset-0 z-[200] flex items-center justify-center p-4"
+    className="fixed inset-0 z-200 flex items-center justify-center p-4"
     onClick={onClose}
   >
     {/* Backdrop */}
@@ -60,7 +60,7 @@ const NavLink = ({ to, children, active, className = '' }) => (
     {children}
     {/* Sliding underline */}
     <span
-      className={`absolute -bottom-[3px] left-0 h-[1.5px] bg-accent transition-all duration-300 ${
+      className={`absolute -bottom-0.75 left-0 h-[1.5px] bg-accent transition-all duration-300 ${
         active ? 'w-full' : 'w-0 group-hover:w-full'
       }`}
     />
@@ -73,7 +73,7 @@ const NavButton = ({ onClick, children, className = '' }) => (
     className={`relative group font-body text-[11px] tracking-[0.18em] uppercase transition-colors duration-200 text-black hover:text-accent ${className}`}
   >
     {children}
-    <span className="absolute -bottom-[3px] left-0 h-[1.5px] bg-accent transition-all duration-300 w-0 group-hover:w-full" />
+    <span className="absolute -bottom-0.75 left-0 h-[1.5px] bg-accent transition-all duration-300 w-0 group-hover:w-full" />
   </button>
 );
 
@@ -116,12 +116,12 @@ const Navigation = () => {
       >
         {/* Top accent line — only when opaque */}
         <div
-          className={`absolute top-0 left-0 w-full h-[2px] bg-accent transition-opacity duration-500 ${
+          className={`absolute top-0 left-0 w-full h-0.5 bg-accent transition-opacity duration-500 ${
             isOpaque ? 'opacity-100' : 'opacity-0'
           }`}
         />
 
-        <div className="w-full max-w-[1400px] mx-auto px-6 md:px-10 py-[18px] flex justify-end items-center">
+        <div className="w-full max-w-350 mx-auto px-6 md:px-10 py-4.5 flex justify-end items-center">
 
           {/* Desktop links */}
           <div className="hidden md:flex items-center gap-8">
@@ -133,7 +133,7 @@ const Navigation = () => {
             {/* Login / Join — pill CTA */}
             <Link
               to="/membership"
-              className={`ml-2 font-body text-[11px] tracking-[0.18em] uppercase px-5 py-[9px] rounded-full border transition-all duration-300 ${
+              className={`ml-2 font-body text-[11px] tracking-[0.18em] uppercase px-5 py-2.25 rounded-full border transition-all duration-300 ${
                 isActive('/membership')
                   ? 'bg-accent border-accent text-white'
                   : 'border-black text-black hover:bg-black hover:text-white'
@@ -145,7 +145,7 @@ const Navigation = () => {
 
           {/* Mobile hamburger */}
           <button
-            className="md:hidden relative w-8 h-8 flex flex-col justify-center items-center gap-[5px]"
+            className="md:hidden relative w-8 h-8 flex flex-col justify-center items-center gap-1.25"
             onClick={() => setMobileOpen(!mobileOpen)}
             aria-label="Toggle menu"
           >
@@ -170,7 +170,7 @@ const Navigation = () => {
         {/* Mobile menu */}
         <div
           className={`md:hidden overflow-hidden transition-all duration-400 ease-in-out bg-white border-t border-gray-100 ${
-            mobileOpen ? 'max-h-[480px] opacity-100' : 'max-h-0 opacity-0'
+            mobileOpen ? 'max-h-120 opacity-100' : 'max-h-0 opacity-0'
           }`}
         >
           <div className="px-6 pb-6 pt-2 flex flex-col">
@@ -218,17 +218,17 @@ const Navigation = () => {
 
 const Footer = () => (
   <footer className="bg-surface border-t border-gray-200 px-6 pt-8 md:pt-14 pb-6 text-black">
-    <div className="max-w-[1400px] mx-auto">
+    <div className="max-w-350 mx-auto">
 
       {/* Main grid: brand + 3 link columns */}
       <div className="grid grid-cols-1 md:grid-cols-[2fr_1fr_1fr_1fr] gap-10 pb-10 border-b border-gray-200">
 
         {/* Brand */}
         <div>
-          <p className="text-secondary text-sm leading-relaxed max-w-[240px] mb-2">
+          <p className="text-secondary text-sm leading-relaxed max-w-60 mb-2">
             宝石をアートとして、その物語と想いを未来へ受け継ぐ。
           </p>
-          <p className="text-secondary/60 text-xs leading-relaxed max-w-[240px]">
+          <p className="text-secondary/60 text-xs leading-relaxed max-w-60">
             Preserving the stories and emotions of gemstones as living art.
           </p>
         </div>
@@ -283,7 +283,7 @@ const Footer = () => (
 const MainLayout = ({ children }) => (
   <div className="flex flex-col min-h-screen bg-bg text-text transition-colors duration-300">
     <Navigation />
-    <main className="flex-1 w-full pt-[72px]">
+    <main className="flex-1 w-full pt-18">
       {children}
     </main>
     <Footer />

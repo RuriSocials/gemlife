@@ -1,4 +1,4 @@
-import React, { useMemo, useState, useEffect } from "react";
+import React, { useMemo, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import {
@@ -54,11 +54,11 @@ function SceneCard({ scene, reverse = false }) {
       className="grid items-center gap-10 py-14 md:grid-cols-2 md:gap-14"
     >
       <div className={reverse ? "md:order-2" : ""}>
-        <div className="overflow-hidden rounded-[2rem] border border-black/5 bg-white shadow-2xl shadow-slate-200/50">
+        <div className="overflow-hidden rounded-4xl border border-black/5 bg-white shadow-2xl shadow-slate-200/50">
           <img
             src={scene.image}
             alt={scene.title}
-            className="h-[220px] md:h-[420px] w-full object-cover"
+            className="h-55 md:h-105 w-full object-cover"
           />
         </div>
       </div>
@@ -102,11 +102,7 @@ export default function ExhibitionPage() {
 
   const details = exhibition ? allExhibitionDetails[exhibition.id] : null;
 
-  useEffect(() => {
-    if (details?.locations && !activeLocation) {
-      setActiveLocation(details.locations[0]);
-    }
-  }, [details, activeLocation]);
+  const effectiveLocation = activeLocation ?? details?.locations?.[0] ?? null;
 
   if (loading) {
     return (
@@ -129,7 +125,7 @@ export default function ExhibitionPage() {
   }
 
   return (
-    <div className="min-h-screen bg-[#f7f5f2] text-slate-900 -mt-[72px]">
+    <div className="min-h-screen bg-[#f7f5f2] text-slate-900 -mt-18">
       {/* ─── Hero ─── */}
       <section className="relative isolate overflow-hidden">
         <img
@@ -140,7 +136,7 @@ export default function ExhibitionPage() {
           alt={exhibition.title}
           className="absolute inset-0 h-full w-full object-cover"
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-slate-950/50 via-slate-950/55 to-[#0f0f10]/85" />
+        <div className="absolute inset-0 bg-linear-to-b from-slate-950/50 via-slate-950/55 to-[#0f0f10]/85" />
         <div className="relative mx-auto flex min-h-[92vh] max-w-7xl items-center px-6 py-24 md:px-10">
           <div className="max-w-3xl">
             <motion.div
@@ -225,7 +221,7 @@ export default function ExhibitionPage() {
           <main className="mx-auto max-w-7xl px-6 pb-24 md:px-10">
             {/* Cultural Background Concept */}
             {details.culturalBackground && (
-              <section className="rounded-[2rem] border border-black/5 bg-white px-6 py-10 shadow-xl shadow-slate-200/40 md:px-10 md:py-14">
+              <section className="rounded-4xl border border-black/5 bg-white px-6 py-10 shadow-xl shadow-slate-200/40 md:px-10 md:py-14">
                 <SectionHeading
                   eyebrow="文化的背景 — Cultural Background"
                   title="背景と歴史"
@@ -290,7 +286,7 @@ export default function ExhibitionPage() {
             {details.timeline && details.timeline.length > 0 && (
               <section
                 id="timeline"
-                className="mt-10 rounded-[2rem] border border-black/5 bg-white px-6 py-10 shadow-xl shadow-slate-200/40 md:px-10 md:py-14"
+                className="mt-10 rounded-4xl border border-black/5 bg-white px-6 py-10 shadow-xl shadow-slate-200/40 md:px-10 md:py-14"
               >
                 <SectionHeading
                   eyebrow="タイムライン — Timeline"
@@ -314,9 +310,9 @@ export default function ExhibitionPage() {
             )}
 
             {/* ─── Story Geography ─── */}
-            {details.locations && details.locations.length > 0 && activeLocation && (
+            {details.locations && details.locations.length > 0 && effectiveLocation && (
               <section className="mt-14 grid gap-8 md:grid-cols-[0.95fr_1.05fr]">
-                <div className="rounded-[2rem] border border-black/5 bg-[#0f0f10] text-white shadow-xl shadow-slate-200/40">
+                <div className="rounded-4xl border border-black/5 bg-[#0f0f10] text-white shadow-xl shadow-slate-200/40">
                   <div className="p-6 md:p-8">
                     <SectionHeading
                       eyebrow="物語の地理 — Story Geography"
@@ -329,7 +325,7 @@ export default function ExhibitionPage() {
                           key={loc.name}
                           onClick={() => setActiveLocation(loc)}
                           className={`flex w-full items-center justify-between rounded-2xl border px-5 py-4 text-left transition ${
-                            activeLocation.name === loc.name
+                            effectiveLocation.name === loc.name
                               ? "border-[#c6a96a]/50 bg-[#c6a96a]/15 shadow-[0_0_15px_rgba(198,169,106,0.1)]"
                               : "border-white/10 bg-white/5 hover:bg-white/10"
                           }`}
@@ -338,17 +334,17 @@ export default function ExhibitionPage() {
                             <div className="text-xs md:text-sm font-medium text-white">
                               {loc.name}
                             </div>
-                            <div className={`text-[10px] md:text-xs uppercase tracking-[0.16em] ${activeLocation.name === loc.name ? "text-[#c6a96a]" : "text-white/55"}`}>
+                            <div className={`text-[10px] md:text-xs uppercase tracking-[0.16em] ${effectiveLocation.name === loc.name ? "text-[#c6a96a]" : "text-white/55"}`}>
                               {loc.role}
                             </div>
                           </div>
-                          <MapPin className={`h-4 w-4 ${activeLocation.name === loc.name ? "text-[#c6a96a] drop-shadow-[0_0_8px_rgba(198,169,106,0.5)]" : "text-white/40"}`} />
+                          <MapPin className={`h-4 w-4 ${effectiveLocation.name === loc.name ? "text-[#c6a96a] drop-shadow-[0_0_8px_rgba(198,169,106,0.5)]" : "text-white/40"}`} />
                         </button>
                       ))}
                     </div>
                   </div>
                 </div>
-                <div className="rounded-[2rem] border border-black/5 bg-white shadow-xl shadow-slate-200/40">
+                <div className="rounded-4xl border border-black/5 bg-white shadow-xl shadow-slate-200/40">
                   <div className="p-8 h-full flex flex-col">
                     <div className="shrink-0">
                       <div className="text-xs uppercase tracking-[0.18em] text-slate-500">
@@ -358,26 +354,26 @@ export default function ExhibitionPage() {
                         className="mt-3 text-3xl font-semibold text-slate-900"
                         style={{ fontFamily: "serif" }}
                       >
-                        {activeLocation.name}
+                        {effectiveLocation.name}
                       </h3>
                       <div className="mt-2 text-sm uppercase tracking-[0.16em] text-amber-700">
-                        {activeLocation.role}
+                        {effectiveLocation.role}
                       </div>
                       <p className="mt-5 max-w-xl text-base leading-7 text-slate-600">
-                        {activeLocation.description}
+                        {effectiveLocation.description}
                       </p>
                     </div>
                     {/* Interactive map iframe */}
-                    <div className="mt-8 flex-1 min-h-[300px] flex items-center justify-center rounded-[1.5rem] bg-slate-50 border border-slate-200 relative overflow-hidden shadow-inner group">
-                      <iframe 
-                        width="100%" 
-                        height="100%" 
+                    <div className="mt-8 flex-1 min-h-75 flex items-center justify-center rounded-3xl bg-slate-50 border border-slate-200 relative overflow-hidden shadow-inner group">
+                      <iframe
+                        width="100%"
+                        height="100%"
                         className="absolute inset-0 w-full h-full grayscale opacity-80 contrast-125 sepia-[.2] mix-blend-multiply transition-all duration-500 group-hover:grayscale-[0.5] group-hover:opacity-100"
                         style={{ border: 0 }}
-                        loading="lazy" 
-                        allowFullScreen 
-                        referrerPolicy="no-referrer-when-downgrade" 
-                        src={`https://maps.google.com/maps?q=${encodeURIComponent((activeLocation.mapQuery || activeLocation.name) + ', Sri Lanka')}&t=&z=11&ie=UTF8&iwloc=&output=embed`}
+                        loading="lazy"
+                        allowFullScreen
+                        referrerPolicy="no-referrer-when-downgrade"
+                        src={`https://maps.google.com/maps?q=${encodeURIComponent((effectiveLocation.mapQuery || effectiveLocation.name) + ', Sri Lanka')}&t=&z=11&ie=UTF8&iwloc=&output=embed`}
                       ></iframe>
                       
                       {/* Subtle loading state background that shows before iframe loads */}
@@ -390,7 +386,7 @@ export default function ExhibitionPage() {
 
             {/* ─── Final Message ─── */}
             {details.finalMessage && (
-              <section className="mt-14 rounded-[2rem] border border-black/5 bg-gradient-to-br from-slate-950 via-slate-900 to-[#1c2d5a] px-6 py-12 text-white shadow-2xl md:px-10 md:py-16">
+              <section className="mt-14 rounded-4xl border border-black/5 bg-linear-to-br from-slate-950 via-slate-900 to-[#1c2d5a] px-6 py-12 text-white shadow-2xl md:px-10 md:py-16">
                 <div className="max-w-3xl">
                   <div className="text-xs uppercase tracking-[0.24em] text-[#c6a96a]">
                     結び — Conclusion
@@ -420,7 +416,7 @@ export default function ExhibitionPage() {
       ) : (
         /* Fallback for Exhibitions without detailed structued data */
         <main className="mx-auto max-w-7xl px-6 py-24 md:px-10 text-center">
-          <div className="mx-auto max-w-2xl bg-white p-10 rounded-[2rem] shadow-sm border border-black/5">
+          <div className="mx-auto max-w-2xl bg-white p-10 rounded-4xl shadow-sm border border-black/5">
             <Gem className="w-10 h-10 text-[#c6a96a] mx-auto mb-6" strokeWidth={1} />
             <h2 className="text-2xl font-semibold font-heading mb-4 text-slate-900">
               Full Exhibition Experience Coming Soon
