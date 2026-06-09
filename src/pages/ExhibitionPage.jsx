@@ -1,4 +1,5 @@
 import React, { useMemo, useState } from "react";
+import { FadeIn, staggerContainer, staggerItem } from "../components/FadeIn";
 import { useParams, Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import {
@@ -189,38 +190,46 @@ export default function ExhibitionPage() {
         <>
           {/* ─── Stats ─── */}
           {details.stats && details.stats.length > 0 && (
-            <section className="mx-auto max-w-7xl px-6 py-12 md:px-10 md:py-20">
-              <div className="grid gap-4 grid-cols-2 md:grid-cols-4">
+            <section className="mx-auto max-w-7xl px-4 py-8 md:px-10 md:py-20">
+              <motion.div
+                className="grid gap-3 grid-cols-2 md:grid-cols-4"
+                variants={staggerContainer}
+                initial="hidden"
+                whileInView="show"
+                viewport={{ once: true, amount: 0.1 }}
+              >
                 {details.stats.map((stat) => {
                   const Icon = ICON_MAP[stat.iconName] || Gem;
                   return (
-                    <div
+                    <motion.div
                       key={stat.label}
-                      className="rounded-[1.75rem] border border-black/5 bg-white/75 shadow-sm backdrop-blur"
+                      variants={staggerItem}
+                      className="rounded-2xl border border-black/5 bg-white/75 shadow-sm backdrop-blur"
                     >
-                      <div className="flex items-center gap-4 p-6">
-                        <div className="rounded-2xl bg-slate-900 p-3 text-[#c6a96a]">
-                          <Icon className="h-5 w-5" />
+                      <div className="flex items-center gap-3 p-4 md:p-6">
+                        <div className="shrink-0 rounded-xl bg-slate-900 p-2.5 md:p-3 text-[#c6a96a]">
+                          <Icon className="h-4 w-4 md:h-5 md:w-5" />
                         </div>
-                        <div>
-                          <div className="text-xs uppercase tracking-[0.16em] text-slate-500">
+                        <div className="min-w-0">
+                          <div className="text-[9px] md:text-xs uppercase tracking-[0.14em] text-slate-500 leading-tight">
                             {stat.label}
                           </div>
-                          <div className="mt-1 text-lg font-medium text-slate-900">
+                          <div className="mt-0.5 text-sm md:text-lg font-medium text-slate-900 leading-snug">
                             {stat.value}
                           </div>
                         </div>
                       </div>
-                    </div>
+                    </motion.div>
                   );
                 })}
-              </div>
+              </motion.div>
             </section>
           )}
 
           <main className="mx-auto max-w-7xl px-6 pb-24 md:px-10">
             {/* Cultural Background Concept */}
             {details.culturalBackground && (
+              <FadeIn>
               <section className="rounded-4xl border border-black/5 bg-white px-6 py-10 shadow-xl shadow-slate-200/40 md:px-10 md:py-14">
                 <SectionHeading
                   eyebrow="文化的背景 — Cultural Background"
@@ -267,6 +276,7 @@ export default function ExhibitionPage() {
                   )}
                 </div>
               </section>
+              </FadeIn>
             )}
 
             {/* ─── Scenes ─── */}
@@ -284,6 +294,7 @@ export default function ExhibitionPage() {
 
             {/* ─── Timeline ─── */}
             {details.timeline && details.timeline.length > 0 && (
+              <FadeIn>
               <section
                 id="timeline"
                 className="mt-10 rounded-4xl border border-black/5 bg-white px-6 py-10 shadow-xl shadow-slate-200/40 md:px-10 md:py-14"
@@ -292,9 +303,15 @@ export default function ExhibitionPage() {
                   eyebrow="タイムライン — Timeline"
                   title="世代を超えて形づくられた遺産"
                 />
-                <div className="mt-10 grid gap-6 grid-cols-2 md:grid-cols-5">
+                <motion.div
+                  className="mt-10 grid gap-6 grid-cols-2 md:grid-cols-5"
+                  variants={staggerContainer}
+                  initial="hidden"
+                  whileInView="show"
+                  viewport={{ once: true, amount: 0.1 }}
+                >
                   {details.timeline.map((item) => (
-                    <div key={item.year} className="relative">
+                    <motion.div key={item.year} variants={staggerItem} className="relative">
                       <div className="flex items-center gap-3">
                         <div className="flex h-10 w-10 items-center justify-center rounded-full bg-[#c6a96a] text-sm font-semibold text-slate-950 text-[10px] tracking-widest uppercase">
                           {item.year}
@@ -303,14 +320,16 @@ export default function ExhibitionPage() {
                       <div className="mt-3 rounded-2xl border border-slate-200 bg-slate-50 p-4 text-sm leading-6 text-slate-600">
                         {item.text}
                       </div>
-                    </div>
+                    </motion.div>
                   ))}
-                </div>
+                </motion.div>
               </section>
+              </FadeIn>
             )}
 
             {/* ─── Story Geography ─── */}
             {details.locations && details.locations.length > 0 && effectiveLocation && (
+              <FadeIn>
               <section className="mt-14 grid gap-8 md:grid-cols-[0.95fr_1.05fr]">
                 <div className="rounded-4xl border border-black/5 bg-[#0f0f10] text-white shadow-xl shadow-slate-200/40">
                   <div className="p-6 md:p-8">
@@ -382,10 +401,12 @@ export default function ExhibitionPage() {
                   </div>
                 </div>
               </section>
+              </FadeIn>
             )}
 
             {/* ─── Final Message ─── */}
             {details.finalMessage && (
+              <FadeIn>
               <section className="mt-14 rounded-4xl border border-black/5 bg-linear-to-br from-slate-950 via-slate-900 to-[#1c2d5a] px-6 py-12 text-white shadow-2xl md:px-10 md:py-16">
                 <div className="max-w-3xl">
                   <div className="text-xs uppercase tracking-[0.24em] text-[#c6a96a]">
@@ -410,6 +431,7 @@ export default function ExhibitionPage() {
                   </div>
                 </div>
               </section>
+              </FadeIn>
             )}
           </main>
         </>

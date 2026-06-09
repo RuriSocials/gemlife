@@ -1,5 +1,7 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
+import { motion } from 'framer-motion';
+import { FadeIn, staggerContainer, staggerItem } from '../components/FadeIn';
 
 const PAGEDATA = {
   'gem-life': {
@@ -98,17 +100,25 @@ const StaticPage = () => {
   return (
     <div className="min-h-screen bg-bg py-10 md:py-24 px-4">
       <div className="max-w-[800px] mx-auto">
-         <h1 className="font-heading text-2xl md:text-4xl mb-6 border-b border-gray-200 pb-4">{page.title}</h1>
-         <div className="space-y-6 text-secondary leading-relaxed">
-           {page.sections.map((section, idx) => (
-             <div key={idx}>
-               {section.heading && (
-                 <h2 className="font-heading text-2xl text-text mb-4 mt-8">{section.heading}</h2>
-               )}
-               <p className="text-base">{section.content}</p>
-             </div>
-           ))}
-         </div>
+        <FadeIn>
+          <h1 className="font-heading text-2xl md:text-4xl mb-6 border-b border-gray-200 pb-4">{page.title}</h1>
+        </FadeIn>
+        <motion.div
+          className="space-y-6 text-secondary leading-relaxed"
+          variants={staggerContainer}
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, amount: 0.05 }}
+        >
+          {page.sections.map((section, idx) => (
+            <motion.div key={idx} variants={staggerItem}>
+              {section.heading && (
+                <h2 className="font-heading text-2xl text-text mb-4 mt-8">{section.heading}</h2>
+              )}
+              <p className="text-base">{section.content}</p>
+            </motion.div>
+          ))}
+        </motion.div>
       </div>
     </div>
   );
