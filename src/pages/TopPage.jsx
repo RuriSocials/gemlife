@@ -4,20 +4,12 @@ import { useCsvData } from "../hooks/useCsvData";
 import NoteEmbed from "../components/NoteEmbed";
 import { storyVideos } from "../data/storyVideos";
 
-import mc1  from "../assets/images/topPage/MC1.png";
-import mc2  from "../assets/images/topPage/MC2.png";
-import mc3  from "../assets/images/topPage/MC3.png";
-import mc4  from "../assets/images/topPage/MC4.png";
-import mc5  from "../assets/images/topPage/MC5.png";
-import mc6  from "../assets/images/topPage/MC6.png";
-import mc7  from "../assets/images/topPage/MC7.png";
-import mc8  from "../assets/images/topPage/MC8.png";
-import mc9  from "../assets/images/topPage/MC9.png";
-import mc10 from "../assets/images/topPage/MC10.png";
-import mc11 from "../assets/images/topPage/MC11.png";
-import mc12 from "../assets/images/topPage/MC12.png";
-
-const gridImages = [mc1, mc2, mc3, mc4, mc5, mc6, mc7, mc8, mc9, mc10, mc11, mc12];
+const gridImages = [
+  '/images/top/MC1.png', '/images/top/MC2.png', '/images/top/MC3.png',
+  '/images/top/MC4.png', '/images/top/MC5.png', '/images/top/MC6.png',
+  '/images/top/MC7.png', '/images/top/MC8.png', '/images/top/MC9.png',
+  '/images/top/MC10.png', '/images/top/MC11.png', '/images/top/MC12.png',
+];
 
 const Hero = () => {
   return (
@@ -91,25 +83,21 @@ const ExhibitionSection = ({ exhibitions }) => {
   const major = exhibitions.filter((e) => e.category === "major");
 
   return (
-    <section className="bg-white text-black md:overflow-hidden" style={{ padding: '2rem 0' }}>
-      <div className="max-w-[1200px] mx-auto px-4 md:h-[82vh] flex flex-col">
+    <section className="bg-white text-black py-8 md:py-12">
+      <div className="max-w-[1200px] mx-auto px-4">
 
-        <h2 className="font-heading text-2xl mb-4 border-l-4 border-accent pl-4 text-black shrink-0">
+        <h2 className="font-heading text-2xl mb-4 border-l-4 border-accent pl-4 text-black">
           Special Exhibition
         </h2>
 
-        {/* Grid fills all remaining height */}
-        <div
-          className="grid grid-cols-1 md:grid-cols-2 gap-5 md:flex-1 md:min-h-0"
-        >
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
           {major.map((ex) => (
             <Link
               to={ex.link || `/exhibitions/${ex.id}`}
               key={ex.id}
               className="group flex flex-col overflow-hidden shadow-md hover:shadow-xl transition-shadow duration-300"
             >
-              {/* Image area — fixed height on mobile, stretches on desktop */}
-              <div className="relative overflow-hidden bg-gray-100 h-[200px] md:flex-1 md:min-h-0">
+              <div className="relative overflow-hidden bg-gray-100 h-[200px] md:h-[55vh]">
                 {ex.image ? (
                   <img
                     src={ex.image}
@@ -123,7 +111,6 @@ const ExhibitionSection = ({ exhibitions }) => {
                 )}
               </div>
 
-              {/* Text area — fixed height below image */}
               <div className="bg-white border-t border-gray-100 p-4 shrink-0">
                 <span className="text-accent text-[10px] font-bold tracking-widest uppercase mb-1 block">
                   {ex.subtitle}
@@ -145,20 +132,19 @@ const ExhibitionSection = ({ exhibitions }) => {
 };
 
 const EventsSection = ({ events }) => (
-  <section className="h-auto md:min-h-screen flex flex-col py-10 bg-white text-black">
-    <div className="max-w-[1200px] mx-auto px-4 w-full flex flex-col flex-1">
-      <h2 className="font-heading text-2xl mb-6 border-l-4 border-accent pl-4 shrink-0">
+  <section className="py-10 md:py-16 bg-white text-black">
+    <div className="max-w-[1200px] mx-auto px-4 w-full">
+      <h2 className="font-heading text-2xl mb-6 border-l-4 border-accent pl-4">
         Event
       </h2>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-5 flex-1">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
         {events.map((event) => (
-          <div key={event.id} className="flex flex-col bg-white shadow-md overflow-hidden h-full">
-            {/* Image — fills remaining height */}
-            <div className="relative flex-1 overflow-hidden bg-gray-100 min-h-0">
+          <div key={event.id} className="flex flex-col bg-white shadow-md overflow-hidden">
+            <div className="relative h-72 overflow-hidden bg-gray-100">
               <img
                 src={event.image}
                 alt={event.title}
-                className="w-full h-full object-cover"
+                className="absolute inset-0 w-full h-full object-cover"
               />
               {event.type === "makuake" && (
                 <div className="absolute top-3 left-3 bg-white px-2 py-0.5 font-bold text-[10px] tracking-wider shadow flex items-center gap-1">
@@ -168,7 +154,6 @@ const EventsSection = ({ events }) => (
               )}
             </div>
 
-            {/* Text — fixed bottom strip */}
             <div className="p-4 shrink-0 border-t border-gray-100">
               <span className="text-accent font-bold text-[10px] uppercase tracking-wider block mb-1">
                 {event.subtitle}
@@ -279,10 +264,10 @@ const GemLiferMembershipSection = () => (
   <section className="py-8 md:py-14 bg-surface text-black">
     <div className="max-w-[1200px] mx-auto px-4 text-center">
       <h2 className="font-heading text-3xl mb-8">Gem Lifer Membership</h2>
-      <p className="text-base leading-relaxed text-secondary max-w-[700px] mx-auto mb-4">
+      <p className="text-base leading-relaxed text-secondary max-w-[700px] mx-auto mb-4 text-left">
         Gemlife.worldは宝石を「創造し、体験し、つながるもの」へと広げていく無料で参加できるコミュニティです。
       </p>
-      <p className="text-base leading-relaxed text-secondary max-w-[700px] mx-auto mb-10">
+      <p className="text-base leading-relaxed text-secondary max-w-[700px] mx-auto mb-10 text-left">
         メンバーに登録していただくと、宝石セミナーや特別販売会、オンラインコミュニティへのご招待、Gem Lifeの体験や表現をデジタル空間に広げるGem Lifeアプリの利用が可能になります。
       </p>
       <Link

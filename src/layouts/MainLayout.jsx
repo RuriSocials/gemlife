@@ -267,12 +267,9 @@ const Footer = () => (
       </div>
 
       {/* Bottom bar */}
-      <div className="pt-5 flex flex-col md:flex-row justify-between items-center gap-2">
+      <div className="pt-5 flex justify-center">
         <p className="text-secondary text-xs">
           &copy; {new Date().getFullYear()} Gemlife.world. All rights reserved.
-        </p>
-        <p className="text-secondary/50 text-xs tracking-widest uppercase">
-          RURI Social Innovation
         </p>
       </div>
 
