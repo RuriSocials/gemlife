@@ -1,11 +1,6 @@
 import { useState, useEffect } from 'react';
 import Papa from 'papaparse';
 
-/**
- * Custom hook to fetch and parse a CSV file from the public directory.
- * @param {string} csvPath - Path relative to public, e.g. '/data/journal.csv'
- * @returns {{ data: Array, loading: boolean, error: string|null }}
- */
 export function useCsvData(csvPath) {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);

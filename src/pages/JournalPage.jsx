@@ -1,15 +1,17 @@
 import React, { useState } from 'react';
+import { motion } from 'framer-motion';
 import { useCsvData } from '../hooks/useCsvData';
 import NoteEmbed from '../components/NoteEmbed';
+import { FadeIn } from '../components/FadeIn';
+import { staggerContainer, staggerItem } from '../components/animationVariants';
 
-import img2 from '../assets/images/specialExhibition/The Land — Rathnapura.jpg';
-import img3 from '../assets/images/specialExhibition/Trust — Walawwa Culture.jpg';
-import img4 from '../assets/images/specialExhibition/Craft — Ruby Jewellers.JPG';
-import img6 from '../assets/images/specialExhibition/Future — Ethical Sri Lanka.jpg';
-import img7 from '../assets/images/specialExhibition/Lives Intertwined — Balangoda.jpg';
-
-const img1 = '/images/hsPage/HST1.png';
-const img5 = '/images/hsPage/HST2.png';
+const img1 = '/images/stories/HST1.png';
+const img2 = '/images/exhibitions/The Land — Rathnapura.jpg';
+const img3 = '/images/exhibitions/Trust — Walawwa Culture.jpg';
+const img4 = '/images/exhibitions/Craft — Ruby Jewellers.JPG';
+const img5 = '/images/stories/HST2.png';
+const img6 = '/images/exhibitions/Future — Ethical Sri Lanka.jpg';
+const img7 = '/images/exhibitions/Lives Intertwined — Balangoda.jpg';
 
 // Node positions are in SVG viewBox 0–100 coordinates (maps 1:1 to CSS percentages)
 const NODES = [
@@ -101,24 +103,29 @@ const JournalPage = () => {
       `}</style>
 
       {/* Header */}
-      <header className="text-center pt-6 pb-4">
-        <h1 className="font-heading text-4xl tracking-wide mb-1">The Journal</h1>
-        <p className="text-secondary text-xs uppercase tracking-[0.2em]">Gem Life Stories</p>
-      </header>
+      <FadeIn>
+        <header className="text-center pt-6 pb-4">
+          <h1 className="font-heading text-4xl tracking-wide mb-1">The Journal</h1>
+          <p className="text-secondary text-xs uppercase tracking-[0.2em]">Gem Life Stories</p>
+        </header>
+      </FadeIn>
 
       {/* Legend */}
-      <div className="flex items-center justify-center gap-6 mb-4 text-xs text-secondary">
-        <div className="flex items-center gap-2">
-          <div className="w-3 h-3 rounded-full bg-accent" />
-          <span>Published</span>
+      <FadeIn delay={0.15}>
+        <div className="flex items-center justify-center gap-6 mb-4 text-xs text-secondary">
+          <div className="flex items-center gap-2">
+            <div className="w-3 h-3 rounded-full bg-accent" />
+            <span>Published</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <div className="w-3 h-3 rounded-full bg-gray-300" />
+            <span>Coming Soon</span>
+          </div>
         </div>
-        <div className="flex items-center gap-2">
-          <div className="w-3 h-3 rounded-full bg-gray-300" />
-          <span>Coming Soon</span>
-        </div>
-      </div>
+      </FadeIn>
 
       {/* Roadmap canvas — desktop only */}
+      <FadeIn delay={0.2}>
       <div className="hidden md:block max-w-[960px] mx-auto px-6 pb-8">
         <div className="relative w-full" style={{ height: '500px' }}>
 
@@ -239,17 +246,24 @@ const JournalPage = () => {
           Hover a node to explore · Follow the path
         </p>
       </div>
+      </FadeIn>
 
       {/* Roadmap — mobile vertical list */}
       <div className="md:hidden max-w-240 mx-auto px-6 pb-8">
-        <div className="relative flex flex-col items-center">
+        <motion.div
+          className="relative flex flex-col items-center"
+          variants={staggerContainer}
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, amount: 0.05 }}
+        >
           {/* Vertical connecting dotted line */}
           <div className="absolute left-7.25 top-8 bottom-8 w-px border-l-2 border-dashed border-amber-300/60 pointer-events-none" />
 
           {NODES.map((node) => {
             const isLive = node.status === 'live';
             return (
-              <div key={node.id} className="relative flex items-start gap-4 w-full mb-6 last:mb-0">
+              <motion.div key={node.id} variants={staggerItem} className="relative flex items-start gap-4 w-full mb-6 last:mb-0">
                 {/* Node circle */}
                 <div className="shrink-0 relative z-10">
                   <div
@@ -288,10 +302,10 @@ const JournalPage = () => {
                     </span>
                   )}
                 </div>
-              </div>
+              </motion.div>
             );
           })}
-        </div>
+        </motion.div>
         <p className="text-center text-xs text-secondary/50 mt-4 tracking-widest uppercase">
           Follow the path
         </p>
@@ -300,17 +314,25 @@ const JournalPage = () => {
       {/* Published embeds */}
       {journal && journal.length > 0 && (
         <div className="max-w-[960px] mx-auto px-6 pb-10">
-          <div className="border-t border-gray-200 pt-10 mb-8 flex items-center gap-4">
-            <span className="text-accent text-[10px] font-bold uppercase tracking-[0.2em]">Published</span>
-            <div className="flex-1 h-px bg-gray-200" />
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <FadeIn>
+            <div className="border-t border-gray-200 pt-10 mb-8 flex items-center gap-4">
+              <span className="text-accent text-[10px] font-bold uppercase tracking-[0.2em]">Published</span>
+              <div className="flex-1 h-px bg-gray-200" />
+            </div>
+          </FadeIn>
+          <motion.div
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+            variants={staggerContainer}
+            initial="hidden"
+            whileInView="show"
+            viewport={{ once: true, amount: 0.05 }}
+          >
             {journal.map(post => (
-              <div key={post.id} className="w-full">
+              <motion.div key={post.id} variants={staggerItem} className="w-full">
                 <NoteEmbed embedUrl={post.embedUrl} />
-              </div>
+              </motion.div>
             ))}
-          </div>
+          </motion.div>
         </div>
       )}
     </div>

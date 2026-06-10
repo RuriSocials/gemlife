@@ -1,23 +1,18 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { motion } from "framer-motion";
 import { useCsvData } from "../hooks/useCsvData";
 import NoteEmbed from "../components/NoteEmbed";
 import { storyVideos } from "../data/storyVideos";
+import { FadeIn } from "../components/FadeIn";
+import { staggerContainer, staggerItem } from "../components/animationVariants";
 
-import mc1  from "../assets/images/topPage/MC1.png";
-import mc2  from "../assets/images/topPage/MC2.png";
-import mc3  from "../assets/images/topPage/MC3.png";
-import mc4  from "../assets/images/topPage/MC4.png";
-import mc5  from "../assets/images/topPage/MC5.png";
-import mc6  from "../assets/images/topPage/MC6.png";
-import mc7  from "../assets/images/topPage/MC7.png";
-import mc8  from "../assets/images/topPage/MC8.png";
-import mc9  from "../assets/images/topPage/MC9.png";
-import mc10 from "../assets/images/topPage/MC10.png";
-import mc11 from "../assets/images/topPage/MC11.png";
-import mc12 from "../assets/images/topPage/MC12.png";
-
-const gridImages = [mc1, mc2, mc3, mc4, mc5, mc6, mc7, mc8, mc9, mc10, mc11, mc12];
+const gridImages = [
+  '/images/top/MC1.png', '/images/top/MC2.png', '/images/top/MC3.png',
+  '/images/top/MC4.png', '/images/top/MC5.png', '/images/top/MC6.png',
+  '/images/top/MC7.png', '/images/top/MC8.png', '/images/top/MC9.png',
+  '/images/top/MC10.png', '/images/top/MC11.png', '/images/top/MC12.png',
+];
 
 const Hero = () => {
   return (
@@ -38,7 +33,7 @@ const Hero = () => {
 
         {/* perspective on parent enables shared 3D space */}
         <div
-          className="grid grid-cols-2 md:grid-cols-4 gap-2 mb-3 opacity-80"
+          className="grid grid-cols-3 md:grid-cols-4 gap-2 mb-3 opacity-80"
           style={{ perspective: '1200px' }}
         >
           {gridImages.map((src, i) => (
@@ -91,53 +86,56 @@ const ExhibitionSection = ({ exhibitions }) => {
   const major = exhibitions.filter((e) => e.category === "major");
 
   return (
-    <section className="bg-white text-black md:overflow-hidden" style={{ padding: '2rem 0' }}>
-      <div className="max-w-[1200px] mx-auto px-4 md:h-[82vh] flex flex-col">
+    <section className="bg-white text-black py-8 md:py-12">
+      <div className="max-w-[1200px] mx-auto px-4">
 
-        <h2 className="font-heading text-2xl mb-4 border-l-4 border-accent pl-4 text-black shrink-0">
-          Special Exhibition
-        </h2>
+        <FadeIn>
+          <h2 className="font-heading text-2xl mb-4 border-l-4 border-accent pl-4 text-black">
+            Special Exhibition
+          </h2>
+        </FadeIn>
 
-        {/* Grid fills all remaining height */}
-        <div
-          className="grid grid-cols-1 md:grid-cols-2 gap-5 md:flex-1 md:min-h-0"
+        <motion.div
+          className="grid grid-cols-1 md:grid-cols-2 gap-5"
+          variants={staggerContainer}
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, amount: 0.05 }}
         >
           {major.map((ex) => (
-            <Link
-              to={ex.link || `/exhibitions/${ex.id}`}
-              key={ex.id}
-              className="group flex flex-col overflow-hidden shadow-md hover:shadow-xl transition-shadow duration-300"
-            >
-              {/* Image area — fixed height on mobile, stretches on desktop */}
-              <div className="relative overflow-hidden bg-gray-100 h-[200px] md:flex-1 md:min-h-0">
-                {ex.image ? (
-                  <img
-                    src={ex.image}
-                    alt={ex.title}
-                    className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                  />
-                ) : (
-                  <div className="absolute inset-0 flex items-center justify-center bg-gray-200 text-gray-400 text-sm">
-                    Image Unavailable
-                  </div>
-                )}
-              </div>
-
-              {/* Text area — fixed height below image */}
-              <div className="bg-white border-t border-gray-100 p-4 shrink-0">
-                <span className="text-accent text-[10px] font-bold tracking-widest uppercase mb-1 block">
-                  {ex.subtitle}
-                </span>
-                <h3 className="text-base font-heading mb-0.5 leading-snug text-gray-900 group-hover:text-accent transition-colors">
-                  {ex.title}
-                </h3>
-                <p className="text-xs font-body text-gray-500">
-                  {ex.date || ex.status}
-                </p>
-              </div>
-            </Link>
+            <motion.div key={ex.id} variants={staggerItem} className="h-full">
+              <Link
+                to={ex.link || `/exhibitions/${ex.id}`}
+                className="group flex flex-col h-full overflow-hidden border border-gray-100 hover:shadow-lg transition-shadow duration-300"
+              >
+                <div className="relative overflow-hidden bg-gray-100 h-[200px] md:h-[55vh]">
+                  {ex.image ? (
+                    <img
+                      src={ex.image}
+                      alt={ex.title}
+                      className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                    />
+                  ) : (
+                    <div className="absolute inset-0 flex items-center justify-center bg-gray-200 text-gray-400 text-sm">
+                      Image Unavailable
+                    </div>
+                  )}
+                </div>
+                <div className="bg-white border-t border-gray-100 p-4 shrink-0 mt-auto">
+                  <span className="text-accent text-[10px] font-bold tracking-widest uppercase mb-1 block">
+                    {ex.subtitle}
+                  </span>
+                  <h3 className="text-base font-heading mb-0.5 leading-snug text-gray-900 group-hover:text-accent transition-colors">
+                    {ex.title}
+                  </h3>
+                  <p className="text-xs font-body text-gray-500">
+                    {ex.date || ex.status}
+                  </p>
+                </div>
+              </Link>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
 
       </div>
     </section>
@@ -145,20 +143,27 @@ const ExhibitionSection = ({ exhibitions }) => {
 };
 
 const EventsSection = ({ events }) => (
-  <section className="h-auto md:min-h-screen flex flex-col py-10 bg-white text-black">
-    <div className="max-w-[1200px] mx-auto px-4 w-full flex flex-col flex-1">
-      <h2 className="font-heading text-2xl mb-6 border-l-4 border-accent pl-4 shrink-0">
-        Event
-      </h2>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-5 flex-1">
+  <section className="py-10 md:py-16 bg-white text-black">
+    <div className="max-w-[1200px] mx-auto px-4 w-full">
+      <FadeIn>
+        <h2 className="font-heading text-2xl mb-6 border-l-4 border-accent pl-4">
+          Event
+        </h2>
+      </FadeIn>
+      <motion.div
+        className="grid grid-cols-1 md:grid-cols-2 gap-5"
+        variants={staggerContainer}
+        initial="hidden"
+        whileInView="show"
+        viewport={{ once: true, amount: 0.05 }}
+      >
         {events.map((event) => (
-          <div key={event.id} className="flex flex-col bg-white shadow-md overflow-hidden h-full">
-            {/* Image — fills remaining height */}
-            <div className="relative flex-1 overflow-hidden bg-gray-100 min-h-0">
+          <motion.div key={event.id} variants={staggerItem} className="flex flex-col bg-white shadow-md overflow-hidden">
+            <div className="relative h-72 overflow-hidden bg-gray-100">
               <img
                 src={event.image}
                 alt={event.title}
-                className="w-full h-full object-cover"
+                className="absolute inset-0 w-full h-full object-cover"
               />
               {event.type === "makuake" && (
                 <div className="absolute top-3 left-3 bg-white px-2 py-0.5 font-bold text-[10px] tracking-wider shadow flex items-center gap-1">
@@ -168,7 +173,6 @@ const EventsSection = ({ events }) => (
               )}
             </div>
 
-            {/* Text — fixed bottom strip */}
             <div className="p-4 shrink-0 border-t border-gray-100">
               <span className="text-accent font-bold text-[10px] uppercase tracking-wider block mb-1">
                 {event.subtitle}
@@ -191,9 +195,9 @@ const EventsSection = ({ events }) => (
                 </a>
               )}
             </div>
-          </div>
+          </motion.div>
         ))}
-      </div>
+      </motion.div>
     </div>
   </section>
 );
@@ -201,17 +205,25 @@ const EventsSection = ({ events }) => (
 const JournalSection = ({ journal }) => (
   <section className="py-8 md:py-14 bg-surface text-black">
     <div className="max-w-[1200px] mx-auto px-4">
-      <div className="mb-10 border-l-4 border-accent pl-4">
-        <h2 className="font-heading text-3xl mb-2">Journal</h2>
-      </div>
+      <FadeIn>
+        <div className="mb-10 border-l-4 border-accent pl-4">
+          <h2 className="font-heading text-3xl mb-2">Journal</h2>
+        </div>
+      </FadeIn>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      <motion.div
+        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6"
+        variants={staggerContainer}
+        initial="hidden"
+        whileInView="show"
+        viewport={{ once: true, amount: 0.05 }}
+      >
         {journal.map((post) => (
-          <div key={post.id} className="w-full flex justify-center">
+          <motion.div key={post.id} variants={staggerItem} className="w-full flex justify-center">
             <NoteEmbed embedUrl={post.embedUrl} />
-          </div>
+          </motion.div>
         ))}
-      </div>
+      </motion.div>
 
     </div>
   </section>
@@ -263,14 +275,24 @@ const StoryCard = ({ story }) => {
 const StoriesSection = ({ stories }) => (
   <section className="py-8 md:py-14 bg-white text-black">
     <div className="max-w-[1200px] mx-auto px-4">
-      <h2 className="font-heading text-3xl mb-10 border-l-4 border-accent pl-4">
-        Highlighted Stories
-      </h2>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-16">
+      <FadeIn>
+        <h2 className="font-heading text-3xl mb-10 border-l-4 border-accent pl-4">
+          Highlighted Stories
+        </h2>
+      </FadeIn>
+      <motion.div
+        className="grid grid-cols-1 md:grid-cols-2 gap-16"
+        variants={staggerContainer}
+        initial="hidden"
+        whileInView="show"
+        viewport={{ once: true, amount: 0.05 }}
+      >
         {stories.map((story) => (
-          <StoryCard key={story.id} story={story} />
+          <motion.div key={story.id} variants={staggerItem}>
+            <StoryCard story={story} />
+          </motion.div>
         ))}
-      </div>
+      </motion.div>
     </div>
   </section>
 );
@@ -278,19 +300,21 @@ const StoriesSection = ({ stories }) => (
 const GemLiferMembershipSection = () => (
   <section className="py-8 md:py-14 bg-surface text-black">
     <div className="max-w-[1200px] mx-auto px-4 text-center">
-      <h2 className="font-heading text-3xl mb-8">Gem Lifer Membership</h2>
-      <p className="text-base leading-relaxed text-secondary max-w-[700px] mx-auto mb-4">
-        Gemlife.worldは宝石を「創造し、体験し、つながるもの」へと広げていく無料で参加できるコミュニティです。
-      </p>
-      <p className="text-base leading-relaxed text-secondary max-w-[700px] mx-auto mb-10">
-        メンバーに登録していただくと、宝石セミナーや特別販売会、オンラインコミュニティへのご招待、Gem Lifeの体験や表現をデジタル空間に広げるGem Lifeアプリの利用が可能になります。
-      </p>
-      <Link
-        to="/membership"
-        className="inline-block bg-black text-white text-sm font-bold px-10 py-4 hover:bg-accent transition-colors tracking-wider uppercase"
-      >
-        Login / Join
-      </Link>
+      <FadeIn>
+        <h2 className="font-heading text-3xl mb-8">Gem Lifer Membership</h2>
+        <p className="text-base leading-relaxed text-secondary max-w-[700px] mx-auto mb-4 text-left">
+          Gemlife.worldは宝石を「創造し、体験し、つながるもの」へと広げていく無料で参加できるコミュニティです。
+        </p>
+        <p className="text-base leading-relaxed text-secondary max-w-[700px] mx-auto mb-10 text-left">
+          メンバーに登録していただくと、宝石セミナーや特別販売会、オンラインコミュニティへのご招待、Gem Lifeの体験や表現をデジタル空間に広げるGem Lifeアプリの利用が可能になります。
+        </p>
+        <Link
+          to="/membership"
+          className="inline-block bg-black text-white text-sm font-bold px-10 py-4 hover:bg-accent transition-colors tracking-wider uppercase"
+        >
+          Login / Join
+        </Link>
+      </FadeIn>
     </div>
   </section>
 );

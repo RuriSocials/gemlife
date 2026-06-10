@@ -50,9 +50,10 @@ const ComingSoonModal = ({ onClose }) => (
   </div>
 );
 
-const NavLink = ({ to, children, active, className = '' }) => (
+const NavLink = ({ to, children, active, className = '', onClick }) => (
   <Link
     to={to}
+    onClick={onClick}
     className={`relative group font-body text-[11px] tracking-[0.18em] uppercase transition-colors duration-200 ${
       active ? 'text-accent' : 'text-black hover:text-accent'
     } ${className}`}
@@ -125,7 +126,7 @@ const Navigation = () => {
 
           {/* Desktop links */}
           <div className="hidden md:flex items-center gap-8">
-            <NavLink to="/" active={isActive('/')}>Home</NavLink>
+            <NavLink to="/" active={isActive('/')} onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>Home</NavLink>
             <NavLink to="/exhibitions" active={isActive('/exhibitions')}>Exhibitions</NavLink>
             <NavButton onClick={() => setShowComingSoon(true)}>Events &amp; Shop</NavButton>
             <NavLink to="/journal" active={isActive('/journal')}>Journal</NavLink>
@@ -182,6 +183,7 @@ const Navigation = () => {
               <Link
                 key={to}
                 to={to}
+                onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
                 className={`${mobileItemBase} ${
                   isActive(to) ? 'text-accent' : 'text-black hover:text-accent'
                 }`}
@@ -217,62 +219,88 @@ const Navigation = () => {
 };
 
 const Footer = () => (
-  <footer className="bg-surface border-t border-gray-200 px-6 pt-8 md:pt-14 pb-6 text-black">
+  <footer className="bg-surface border-t border-gray-200 px-5 pt-6 md:pt-14 pb-5 md:pb-6 text-black">
     <div className="max-w-350 mx-auto">
 
-      {/* Main grid: brand + 3 link columns */}
-      <div className="grid grid-cols-1 md:grid-cols-[2fr_1fr_1fr_1fr] gap-10 pb-10 border-b border-gray-200">
-
-        {/* Brand */}
-        <div>
-          <p className="text-secondary text-sm leading-relaxed max-w-60 mb-2">
-            宝石をアートとして、その物語と想いを未来へ受け継ぐ。
-          </p>
-          <p className="text-secondary/60 text-xs leading-relaxed max-w-60">
-            Preserving the stories and emotions of gemstones as living art.
-          </p>
+      {/* Brand — desktop only */}
+      <div className="hidden md:block pb-10">
+        <div className="grid grid-cols-[2fr_1fr_1fr_1fr] gap-10 border-b border-gray-200 pb-10">
+          <div>
+            <p className="text-secondary text-sm leading-relaxed max-w-60 mb-2">
+              宝石をアートとして、その物語と想いを未来へ受け継ぐ。
+            </p>
+            <p className="text-secondary/60 text-xs leading-relaxed max-w-60">
+              Preserving the stories and emotions of gemstones as living art.
+            </p>
+          </div>
+          <div>
+            <h4 className="text-accent text-[10px] font-bold uppercase tracking-[0.22em] mb-5">Explore</h4>
+            <ul className="space-y-3">
+              <li><Link to="/" className="text-secondary hover:text-black text-sm transition-colors">Home</Link></li>
+              <li><Link to="/exhibitions" className="text-secondary hover:text-black text-sm transition-colors">Exhibition</Link></li>
+              <li><Link to="/journal" className="text-secondary hover:text-black text-sm transition-colors">Journal</Link></li>
+              <li><Link to="/membership" className="text-secondary hover:text-black text-sm transition-colors">Login / Join</Link></li>
+            </ul>
+          </div>
+          <div>
+            <h4 className="text-accent text-[10px] font-bold uppercase tracking-[0.22em] mb-5">Gem Life</h4>
+            <ul className="space-y-3">
+              <li><Link to="/page/gem-life" className="text-secondary hover:text-black text-sm transition-colors">Gem Life</Link></li>
+              <li><Link to="/page/who-we-are" className="text-secondary hover:text-black text-sm transition-colors">Who We Are</Link></li>
+              <li><Link to="/page/social-engagement" className="text-secondary hover:text-black text-sm transition-colors">Social Engagement</Link></li>
+            </ul>
+          </div>
+          <div>
+            <h4 className="text-accent text-[10px] font-bold uppercase tracking-[0.22em] mb-5">Legal</h4>
+            <ul className="space-y-3">
+              <li><Link to="/page/terms" className="text-secondary hover:text-black text-sm transition-colors">Terms of Service</Link></li>
+              <li><Link to="/page/privacy" className="text-secondary hover:text-black text-sm transition-colors">Privacy Policy</Link></li>
+              <li><Link to="/page/contact" className="text-secondary hover:text-black text-sm transition-colors">Contact</Link></li>
+              <li><Link to="/page/faq" className="text-secondary hover:text-black text-sm transition-colors">FAQ</Link></li>
+            </ul>
+          </div>
         </div>
+      </div>
 
-        {/* Explore */}
-        <div>
-          <h4 className="text-accent text-[10px] font-bold uppercase tracking-[0.22em] mb-5">Explore</h4>
-          <ul className="space-y-3">
-            <li><Link to="/" className="text-secondary hover:text-black text-sm transition-colors">Home</Link></li>
-            <li><Link to="/exhibitions" className="text-secondary hover:text-black text-sm transition-colors">Exhibition</Link></li>
-            <li><Link to="/journal" className="text-secondary hover:text-black text-sm transition-colors">Journal</Link></li>
-            <li><Link to="/membership" className="text-secondary hover:text-black text-sm transition-colors">Login / Join</Link></li>
-          </ul>
-        </div>
-
-        {/* Gem Life */}
-        <div>
-          <h4 className="text-accent text-[10px] font-bold uppercase tracking-[0.22em] mb-5">Gem Life</h4>
-          <ul className="space-y-3">
-            <li><Link to="/page/gem-life" className="text-secondary hover:text-black text-sm transition-colors">Gem Life</Link></li>
-            <li><Link to="/page/who-we-are" className="text-secondary hover:text-black text-sm transition-colors">Who We Are</Link></li>
-            <li><Link to="/page/social-engagement" className="text-secondary hover:text-black text-sm transition-colors">Social Engagement</Link></li>
-          </ul>
-        </div>
-
-        {/* Legal */}
-        <div>
-          <h4 className="text-accent text-[10px] font-bold uppercase tracking-[0.22em] mb-5">Legal</h4>
-          <ul className="space-y-3">
-            <li><Link to="/page/terms" className="text-secondary hover:text-black text-sm transition-colors">Terms of Service</Link></li>
-            <li><Link to="/page/privacy" className="text-secondary hover:text-black text-sm transition-colors">Privacy Policy</Link></li>
-            <li><Link to="/page/contact" className="text-secondary hover:text-black text-sm transition-colors">Contact</Link></li>
-            <li><Link to="/page/faq" className="text-secondary hover:text-black text-sm transition-colors">FAQ</Link></li>
-          </ul>
+      {/* Mobile footer — compact 3-column grid */}
+      <div className="md:hidden pb-5 border-b border-gray-100">
+        <div className="grid grid-cols-3 gap-x-4 gap-y-1">
+          {/* Explore */}
+          <div>
+            <p className="text-accent text-[9px] font-bold uppercase tracking-[0.18em] mb-3">Explore</p>
+            <ul className="space-y-2.5">
+              <li><Link to="/" className="text-secondary text-xs leading-none transition-colors">Home</Link></li>
+              <li><Link to="/exhibitions" className="text-secondary text-xs leading-none transition-colors">Exhibitions</Link></li>
+              <li><Link to="/journal" className="text-secondary text-xs leading-none transition-colors">Journal</Link></li>
+              <li><Link to="/membership" className="text-secondary text-xs leading-none transition-colors">Login / Join</Link></li>
+            </ul>
+          </div>
+          {/* Gem Life */}
+          <div>
+            <p className="text-accent text-[9px] font-bold uppercase tracking-[0.18em] mb-3">Gem Life</p>
+            <ul className="space-y-2.5">
+              <li><Link to="/page/gem-life" className="text-secondary text-xs leading-none transition-colors">Gem Life</Link></li>
+              <li><Link to="/page/who-we-are" className="text-secondary text-xs leading-none transition-colors">Who We Are</Link></li>
+              <li><Link to="/page/social-engagement" className="text-secondary text-xs leading-snug transition-colors">Social Engagement</Link></li>
+            </ul>
+          </div>
+          {/* Legal */}
+          <div>
+            <p className="text-accent text-[9px] font-bold uppercase tracking-[0.18em] mb-3">Legal</p>
+            <ul className="space-y-2.5">
+              <li><Link to="/page/terms" className="text-secondary text-xs leading-snug transition-colors">Terms</Link></li>
+              <li><Link to="/page/privacy" className="text-secondary text-xs leading-snug transition-colors">Privacy</Link></li>
+              <li><Link to="/page/contact" className="text-secondary text-xs leading-none transition-colors">Contact</Link></li>
+              <li><Link to="/page/faq" className="text-secondary text-xs leading-none transition-colors">FAQ</Link></li>
+            </ul>
+          </div>
         </div>
       </div>
 
       {/* Bottom bar */}
-      <div className="pt-5 flex flex-col md:flex-row justify-between items-center gap-2">
-        <p className="text-secondary text-xs">
+      <div className="pt-4 flex justify-center">
+        <p className="text-secondary/60 text-[10px] tracking-wide">
           &copy; {new Date().getFullYear()} Gemlife.world. All rights reserved.
-        </p>
-        <p className="text-secondary/50 text-xs tracking-widest uppercase">
-          RURI Social Innovation
         </p>
       </div>
 
