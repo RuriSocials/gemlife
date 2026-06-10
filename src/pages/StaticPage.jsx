@@ -1,7 +1,8 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { FadeIn, staggerContainer, staggerItem } from '../components/FadeIn';
+import { FadeIn } from '../components/FadeIn';
+import { staggerContainer, staggerItem } from '../components/animationVariants';
 
 const PAGEDATA = {
   'gem-life': {

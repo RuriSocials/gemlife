@@ -4,7 +4,8 @@ import { motion } from "framer-motion";
 import { useCsvData } from "../hooks/useCsvData";
 import NoteEmbed from "../components/NoteEmbed";
 import { storyVideos } from "../data/storyVideos";
-import { FadeIn, staggerContainer, staggerItem } from "../components/FadeIn";
+import { FadeIn } from "../components/FadeIn";
+import { staggerContainer, staggerItem } from "../components/animationVariants";
 
 const gridImages = [
   '/images/top/MC1.png', '/images/top/MC2.png', '/images/top/MC3.png',

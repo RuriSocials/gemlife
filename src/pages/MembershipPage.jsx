@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { FadeIn, staggerContainer, staggerItem } from '../components/FadeIn';
+import { FadeIn } from '../components/FadeIn';
+import { staggerContainer, staggerItem } from '../components/animationVariants';
 
 const MembershipPage = () => {
   return (

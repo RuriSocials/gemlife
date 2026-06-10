@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { useCsvData } from '../hooks/useCsvData';
 import NoteEmbed from '../components/NoteEmbed';
-import { FadeIn, staggerContainer, staggerItem } from '../components/FadeIn';
+import { FadeIn } from '../components/FadeIn';
+import { staggerContainer, staggerItem } from '../components/animationVariants';
 
 const img1 = '/images/stories/HST1.png';
 const img2 = '/images/exhibitions/The Land — Rathnapura.jpg';
