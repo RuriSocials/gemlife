@@ -102,10 +102,10 @@ const ExhibitionSection = ({ exhibitions }) => {
           viewport={{ once: true, amount: 0.05 }}
         >
           {major.map((ex) => (
-            <motion.div key={ex.id} variants={staggerItem}>
+            <motion.div key={ex.id} variants={staggerItem} className="h-full">
               <Link
                 to={ex.link || `/exhibitions/${ex.id}`}
-                className="group flex flex-col overflow-hidden shadow-md hover:shadow-xl transition-shadow duration-300"
+                className="group flex flex-col h-full overflow-hidden border border-gray-100 hover:shadow-lg transition-shadow duration-300"
               >
                 <div className="relative overflow-hidden bg-gray-100 h-[200px] md:h-[55vh]">
                   {ex.image ? (
@@ -120,7 +120,7 @@ const ExhibitionSection = ({ exhibitions }) => {
                     </div>
                   )}
                 </div>
-                <div className="bg-white border-t border-gray-100 p-4 shrink-0">
+                <div className="bg-white border-t border-gray-100 p-4 shrink-0 mt-auto">
                   <span className="text-accent text-[10px] font-bold tracking-widest uppercase mb-1 block">
                     {ex.subtitle}
                   </span>

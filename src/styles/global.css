@@ -16,6 +16,10 @@
     @apply bg-bg text-text font-body antialiased;
     overflow-x: hidden;
   }
+
+  a {
+    text-decoration: none;
+  }
   
   h1, h2, h3, h4, h5, h6 {
     @apply font-heading font-normal leading-tight;
