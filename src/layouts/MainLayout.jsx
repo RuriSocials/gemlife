@@ -227,7 +227,7 @@ const Footer = () => (
         <div className="grid grid-cols-[2fr_1fr_1fr_1fr] gap-10 border-b border-gray-200 pb-10">
           <div>
             <p className="text-secondary text-sm leading-relaxed max-w-60 mb-2">
-              宝石をアートとして、その物語と想いを未来へ受け継ぐ。
+              宝石のある日常がアートとなり、その物語と想いを未来へ受け継ぐ。
             </p>
             <p className="text-secondary/60 text-xs leading-relaxed max-w-60">
               Preserving the stories and emotions of gemstones as living art.

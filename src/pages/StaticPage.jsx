@@ -32,13 +32,15 @@ const PAGEDATA = {
     title: 'Who We Are',
     sections: [
       {
-        content: 'RURI Social Innovation（RURI）は、Gemlife.worldのオンラインプラットフォームの開発・管理を無償で行うほか、Gem Lifeに関連するコンテンツの企画・編集やイベントの開催を行うことで、Gem LifersによるGem Lifeに貢献します。'
+        content: <><a href="https://rurisocial.com/" target="_blank" rel="noopener noreferrer" className="underline hover:text-black transition-colors">RURI Social Innovation（RURI）</a>は、Gemlife.worldのオンラインプラットフォームの開発・管理を無償で行うほか、Gem Lifeに関連するコンテンツの企画・編集やイベントの開催を行うことで、Gem LifersによるGem Lifeに貢献します。</>
+
       },
       {
         content: 'Gem Lifeは十人十色ですが、宝石のある生活を通してその人自身の自己イメージや価値観がリアリティをもって体現されるためには、その宝石も本物でリアリティを持つ、つまり真に善で美なるイメージを描ける対象でなければならないとRURIは考えています。'
       },
       {
-        content: 'このため、RURIは、スリランカにおいてフェアトレードの仕組みと、宝石の出所やトレーサビリティ、品質評価、コンプライアンス等を正しく記録し証明するプラットフォームを開発し、こうして調達・制作した宝石やジュエリーをRURI.shopにてご紹介・販売をしています。'
+        content: <>このため、RURIは、スリランカにおいてフェアトレードの仕組みと、宝石の出所やトレーサビリティ、品質評価、コンプライアンス等を正しく記録し証明するプラットフォームを開発し、こうして調達・制作した宝石やジュエリーを<a href="https://ruri.shop/" target="_blank" rel="noopener noreferrer" className="underline hover:text-black transition-colors">RURI.shop</a>にてご紹介・販売をしています。</>
+
       },
       {
         content: 'またRURIでは、宝石のホリスティックな価値をデジタル化して表現・体験するGem Life Appを提供するほか、より豊かでリアリティのあるGem Lifeを実現するための製品やサービスを企画・提案していきます。'

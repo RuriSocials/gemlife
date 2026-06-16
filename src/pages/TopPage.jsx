@@ -303,10 +303,10 @@ const GemLiferMembershipSection = () => (
       <FadeIn>
         <h2 className="font-heading text-3xl mb-8">Gem Lifer Membership</h2>
         <p className="text-base leading-relaxed text-secondary max-w-[700px] mx-auto mb-4 text-left">
-          Gemlife.worldは宝石を「創造し、体験し、つながるもの」へと広げていく無料で参加できるコミュニティです。
+          宝石のあるアートな日常を通して、創造性や自分らしさを大切にするGem Liferのコミュニティに参加しませんか。
         </p>
         <p className="text-base leading-relaxed text-secondary max-w-[700px] mx-auto mb-10 text-left">
-          メンバーに登録していただくと、宝石セミナーや特別販売会、オンラインコミュニティへのご招待、Gem Lifeの体験や表現をデジタル空間に広げるGem Lifeアプリの利用が可能になります。
+          Join the Gem Lifer community, where we celebrate creativity, purpose, and individuality through an artistic lifestyle enriched by gemstones.
         </p>
         <Link
           to="/membership"
