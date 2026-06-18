@@ -8,10 +8,18 @@ import { FadeIn } from "../components/FadeIn";
 import { staggerContainer, staggerItem } from "../components/animationVariants";
 
 const gridImages = [
-  '/images/top/MC1.png', '/images/top/MC2.png', '/images/top/MC3.png',
-  '/images/top/MC4.png', '/images/top/MC5.png', '/images/top/MC6.png',
-  '/images/top/MC7.png', '/images/top/MC8.png', '/images/top/MC9.png',
-  '/images/top/MC10.png', '/images/top/MC11.png', '/images/top/MC12.png',
+  "/images/top/MC1.png",
+  "/images/top/MC2.png",
+  "/images/top/MC3.png",
+  "/images/top/MC4.png",
+  "/images/top/MC5.png",
+  "/images/top/MC6.png",
+  "/images/top/MC7.png",
+  "/images/top/MC8.png",
+  "/images/top/MC9.png",
+  "/images/top/MC10.png",
+  "/images/top/MC11.png",
+  "/images/top/MC12.png",
 ];
 
 const Hero = () => {
@@ -34,16 +42,16 @@ const Hero = () => {
         {/* perspective on parent enables shared 3D space */}
         <div
           className="grid grid-cols-3 md:grid-cols-4 gap-2 mb-3 opacity-80"
-          style={{ perspective: '1200px' }}
+          style={{ perspective: "1200px" }}
         >
           {gridImages.map((src, i) => (
             <div
               key={i}
               className="h-[90px] md:h-[105px] border border-black/20 bg-white flex items-center justify-center overflow-hidden"
               style={{
-                animation: 'bookOpen 0.75s cubic-bezier(0.23, 1, 0.32, 1) both',
+                animation: "bookOpen 0.75s cubic-bezier(0.23, 1, 0.32, 1) both",
                 animationDelay: `${i * 0.07}s`,
-                transformOrigin: 'left center',
+                transformOrigin: "left center",
               }}
             >
               <img
@@ -65,7 +73,8 @@ const Hero = () => {
             </span>
           </div>
           <p className="max-w-[400px] text-xs md:text-sm leading-relaxed font-medium text-black/50">
-            「Life as art」とは、創造性や目的、自分らしさを大切にしながら生きること。主役は宝石ではなく、"Life"そのものです。
+            「Life as
+            art」とは、創造性や目的、自分らしさを大切にしながら生きること。主役は宝石ではなく、"Life"そのものです。
           </p>
         </div>
       </div>
@@ -88,7 +97,6 @@ const ExhibitionSection = ({ exhibitions }) => {
   return (
     <section className="bg-white text-black py-8 md:py-12">
       <div className="max-w-[1200px] mx-auto px-4">
-
         <FadeIn>
           <h2 className="font-heading text-2xl mb-4 border-l-4 border-accent pl-4 text-black">
             Special Exhibition
@@ -136,7 +144,6 @@ const ExhibitionSection = ({ exhibitions }) => {
             </motion.div>
           ))}
         </motion.div>
-
       </div>
     </section>
   );
@@ -158,7 +165,11 @@ const EventsSection = ({ events }) => (
         viewport={{ once: true, amount: 0.05 }}
       >
         {events.map((event) => (
-          <motion.div key={event.id} variants={staggerItem} className="flex flex-col bg-white shadow-md overflow-hidden">
+          <motion.div
+            key={event.id}
+            variants={staggerItem}
+            className="flex flex-col bg-white shadow-md overflow-hidden"
+          >
             <div className="relative h-72 overflow-hidden bg-gray-100">
               <img
                 src={event.image}
@@ -177,9 +188,13 @@ const EventsSection = ({ events }) => (
               <span className="text-accent font-bold text-[10px] uppercase tracking-wider block mb-1">
                 {event.subtitle}
               </span>
-              <h3 className="text-base font-bold leading-snug mb-1">{event.title}</h3>
+              <h3 className="text-base font-bold leading-snug mb-1">
+                {event.title}
+              </h3>
               {event.englishTitle && (
-                <p className="text-xs text-gray-400 font-medium mb-1">{event.englishTitle}</p>
+                <p className="text-xs text-gray-400 font-medium mb-1">
+                  {event.englishTitle}
+                </p>
               )}
               <p className="text-xs text-gray-500 leading-relaxed line-clamp-2 mb-2">
                 {event.description}
@@ -219,12 +234,15 @@ const JournalSection = ({ journal }) => (
         viewport={{ once: true, amount: 0.05 }}
       >
         {journal.map((post) => (
-          <motion.div key={post.id} variants={staggerItem} className="w-full flex justify-center">
+          <motion.div
+            key={post.id}
+            variants={staggerItem}
+            className="w-full flex justify-center"
+          >
             <NoteEmbed embedUrl={post.embedUrl} />
           </motion.div>
         ))}
       </motion.div>
-
     </div>
   </section>
 );
@@ -237,7 +255,11 @@ const StoryCard = ({ story }) => {
       {/* Author header */}
       <div className="flex items-center gap-4 mb-2">
         <div className="w-12 h-12 rounded-full overflow-hidden bg-gray-100 shrink-0">
-          <img src={story.titelImage} className="w-full h-full object-cover" alt="Author" />
+          <img
+            src={story.titelImage}
+            className="w-full h-full object-cover"
+            alt="Author"
+          />
         </div>
         <div>
           <h3 className="font-bold text-lg leading-none">{story.title}</h3>
@@ -303,17 +325,26 @@ const GemLiferMembershipSection = () => (
       <FadeIn>
         <h2 className="font-heading text-3xl mb-8">Gem Lifer Membership</h2>
         <p className="text-base leading-relaxed text-secondary max-w-[700px] mx-auto mb-4 text-left">
-          宝石のあるアートな日常を通して、創造性や自分らしさを大切にするGem Liferのコミュニティに参加しませんか。
+          宝石のあるアートな日常を通して、創造性や自分らしさを大切にするGem
+          Liferのコミュニティに参加しませんか。
         </p>
         <p className="text-base leading-relaxed text-secondary max-w-[700px] mx-auto mb-10 text-left">
-          Join the Gem Lifer community, where we celebrate creativity, purpose, and individuality through an artistic lifestyle enriched by gemstones.
+          Join the Gem Lifer community, where we celebrate creativity, purpose,
+          and individuality through an artistic lifestyle enriched by gemstones.
         </p>
-        <Link
-          to="/membership"
-          className="inline-block bg-black text-white text-sm font-bold px-10 py-4 hover:bg-accent transition-colors tracking-wider uppercase"
+        <button
+          type="button"
+          disabled
+          aria-disabled="true"
+          className="inline-flex items-center gap-2.5 font-body text-[11px] font-bold tracking-[0.18em] uppercase px-10 py-3.5 rounded-full border border-black/30 text-black/60 cursor-not-allowed"
         >
-          Login / Join
-        </Link>
+          Coming Soon
+          <span className="flex items-center gap-1">
+            <span className="w-1.5 h-1.5 rounded-full bg-accent" />
+            <span className="w-1.5 h-1.5 rounded-full bg-accent" />
+            <span className="w-1.5 h-1.5 rounded-full bg-accent" />
+          </span>
+        </button>
       </FadeIn>
     </div>
   </section>

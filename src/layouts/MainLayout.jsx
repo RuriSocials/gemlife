@@ -1,54 +1,61 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 
-const ComingSoonModal = ({ onClose }) => (
-  <div
-    className="fixed inset-0 z-200 flex items-center justify-center p-4"
-    onClick={onClose}
-  >
-    {/* Backdrop */}
-    <div className="absolute inset-0 bg-black/55 backdrop-blur-sm" />
+const ComingSoonModal = ({ label = 'This feature', onClose }) => {
+  useEffect(() => {
+    document.body.style.overflow = 'hidden';
+    return () => { document.body.style.overflow = ''; };
+  }, []);
 
-    {/* Card */}
+  return (
     <div
-      className="relative bg-white rounded-3xl shadow-2xl px-10 py-12 max-w-sm w-full text-center"
-      onClick={(e) => e.stopPropagation()}
+      className="fixed inset-0 z-200 flex items-center justify-center p-4"
+      onClick={onClose}
     >
-      {/* Close × */}
-      <button
-        onClick={onClose}
-        className="absolute top-4 right-5 text-2xl font-thin text-gray-300 hover:text-black transition-colors leading-none"
-        aria-label="Close"
-      >
-        ×
-      </button>
+      {/* Backdrop */}
+      <div className="absolute inset-0 bg-black/55 backdrop-blur-sm" />
 
-      {/* Diamond icon */}
-      <div className="mx-auto mb-7 w-14 h-14 flex items-center justify-center">
-        <div className="w-10 h-10 rotate-45 border-2 border-accent relative flex items-center justify-center">
-          <div className="w-2 h-2 bg-accent rotate-0" />
+      {/* Card */}
+      <div
+        className="relative bg-white rounded-3xl shadow-2xl px-10 py-12 max-w-sm w-full text-center"
+        onClick={(e) => e.stopPropagation()}
+      >
+        {/* Close × */}
+        <button
+          onClick={onClose}
+          className="absolute top-4 right-5 text-2xl font-thin text-gray-300 hover:text-black transition-colors leading-none"
+          aria-label="Close"
+        >
+          ×
+        </button>
+
+        {/* Diamond icon */}
+        <div className="mx-auto mb-7 w-14 h-14 flex items-center justify-center">
+          <div className="w-10 h-10 rotate-45 border-2 border-accent relative flex items-center justify-center">
+            <div className="w-2 h-2 bg-accent rotate-0" />
+          </div>
         </div>
+
+        <h2 className="font-heading text-3xl font-semibold mb-3 tracking-wide">Coming Soon</h2>
+
+        <p className="text-secondary text-sm leading-relaxed mb-2">
+          {label} は現在準備中です。
+        </p>
+        <p className="text-secondary text-xs leading-relaxed mb-9">
+          {label} is currently being prepared.<br />
+          Please check back soon.
+        </p>
+
+        <button
+          onClick={onClose}
+          className="w-full bg-black text-white text-xs font-bold tracking-widest uppercase py-3 rounded-full hover:bg-accent transition-colors"
+        >
+          OK
+        </button>
       </div>
-
-      <h2 className="font-heading text-3xl font-semibold mb-3 tracking-wide">Coming Soon</h2>
-
-      <p className="text-secondary text-sm leading-relaxed mb-2">
-        Events &amp; Shop は現在準備中です。
-      </p>
-      <p className="text-secondary text-xs leading-relaxed mb-9">
-        Events &amp; Shop is currently being prepared.<br />
-        Please check back soon.
-      </p>
-
-      <button
-        onClick={onClose}
-        className="w-full bg-black text-white text-xs font-bold tracking-widest uppercase py-3 rounded-full hover:bg-accent transition-colors"
-      >
-        OK
-      </button>
     </div>
-  </div>
-);
+  );
+};
 
 const NavLink = ({ to, children, active, className = '', onClick }) => (
   <Link
@@ -78,11 +85,10 @@ const NavButton = ({ onClick, children, className = '' }) => (
   </button>
 );
 
-const Navigation = () => {
+const Navigation = ({ onComingSoon }) => {
   const location = useLocation();
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [showComingSoon, setShowComingSoon] = useState(false);
   const isHome = location.pathname === '/';
   const isOpaque = scrolled || !isHome || mobileOpen;
 
@@ -96,9 +102,9 @@ const Navigation = () => {
   useEffect(() => { setMobileOpen(false); }, [location.pathname]);
 
   useEffect(() => {
-    document.body.style.overflow = showComingSoon || mobileOpen ? 'hidden' : '';
+    document.body.style.overflow = mobileOpen ? 'hidden' : '';
     return () => { document.body.style.overflow = ''; };
-  }, [showComingSoon, mobileOpen]);
+  }, [mobileOpen]);
 
   const isActive = (path) =>
     path === '/' ? location.pathname === '/' : location.pathname.startsWith(path);
@@ -128,20 +134,16 @@ const Navigation = () => {
           <div className="hidden md:flex items-center gap-8">
             <NavLink to="/" active={isActive('/')} onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>Home</NavLink>
             <NavLink to="/exhibitions" active={isActive('/exhibitions')}>Exhibitions</NavLink>
-            <NavButton onClick={() => setShowComingSoon(true)}>Events &amp; Shop</NavButton>
+            <NavButton onClick={() => onComingSoon('Events & Shop')}>Events &amp; Shop</NavButton>
             <NavLink to="/journal" active={isActive('/journal')}>Journal</NavLink>
 
             {/* Login / Join — pill CTA */}
-            <Link
-              to="/membership"
-              className={`ml-2 font-body text-[11px] tracking-[0.18em] uppercase px-5 py-2.25 rounded-full border transition-all duration-300 ${
-                isActive('/membership')
-                  ? 'bg-accent border-accent text-white'
-                  : 'border-black text-black hover:bg-black hover:text-white'
-              }`}
+            <button
+              onClick={() => onComingSoon('Membership')}
+              className="ml-2 font-body text-[11px] tracking-[0.18em] uppercase px-5 py-2.25 rounded-full border transition-all duration-300 border-black text-black hover:bg-black hover:text-white"
             >
               Login / Join
-            </Link>
+            </button>
           </div>
 
           {/* Mobile hamburger */}
@@ -196,29 +198,27 @@ const Navigation = () => {
             ))}
 
             <button
-              onClick={() => { setMobileOpen(false); setShowComingSoon(true); }}
+              onClick={() => { setMobileOpen(false); onComingSoon('Events & Shop'); }}
               className={`${mobileItemBase} text-left text-black hover:text-accent`}
             >
               Events &amp; Shop
               <span className="text-[9px] tracking-widest uppercase text-accent/70 font-bold">Soon</span>
             </button>
 
-            <Link
-              to="/membership"
+            <button
+              onClick={() => { setMobileOpen(false); onComingSoon('Membership'); }}
               className="mt-5 w-full text-center font-body text-[11px] tracking-[0.18em] uppercase px-5 py-3 rounded-full bg-black text-white hover:bg-accent transition-colors duration-300"
             >
               Login / Join
-            </Link>
+            </button>
           </div>
         </div>
       </nav>
-
-      {showComingSoon && <ComingSoonModal onClose={() => setShowComingSoon(false)} />}
     </>
   );
 };
 
-const Footer = () => (
+const Footer = ({ onComingSoon }) => (
   <footer className="bg-surface border-t border-gray-200 px-5 pt-6 md:pt-14 pb-5 md:pb-6 text-black">
     <div className="max-w-350 mx-auto">
 
@@ -239,7 +239,7 @@ const Footer = () => (
               <li><Link to="/" className="text-secondary hover:text-black text-sm transition-colors">Home</Link></li>
               <li><Link to="/exhibitions" className="text-secondary hover:text-black text-sm transition-colors">Exhibition</Link></li>
               <li><Link to="/journal" className="text-secondary hover:text-black text-sm transition-colors">Journal</Link></li>
-              <li><Link to="/membership" className="text-secondary hover:text-black text-sm transition-colors">Login / Join</Link></li>
+              <li><button onClick={() => onComingSoon('Membership')} className="text-secondary hover:text-black text-sm transition-colors">Login / Join</button></li>
             </ul>
           </div>
           <div>
@@ -272,7 +272,7 @@ const Footer = () => (
               <li><Link to="/" className="text-secondary text-xs leading-none transition-colors">Home</Link></li>
               <li><Link to="/exhibitions" className="text-secondary text-xs leading-none transition-colors">Exhibitions</Link></li>
               <li><Link to="/journal" className="text-secondary text-xs leading-none transition-colors">Journal</Link></li>
-              <li><Link to="/membership" className="text-secondary text-xs leading-none transition-colors">Login / Join</Link></li>
+              <li><button onClick={() => onComingSoon('Membership')} className="text-secondary text-xs leading-none transition-colors">Login / Join</button></li>
             </ul>
           </div>
           {/* Gem Life */}
@@ -308,14 +308,19 @@ const Footer = () => (
   </footer>
 );
 
-const MainLayout = ({ children }) => (
-  <div className="flex flex-col min-h-screen bg-bg text-text transition-colors duration-300">
-    <Navigation />
-    <main className="flex-1 w-full pt-18">
-      {children}
-    </main>
-    <Footer />
-  </div>
-);
+const MainLayout = ({ children }) => {
+  const [comingSoon, setComingSoon] = useState(null);
+
+  return (
+    <div className="flex flex-col min-h-screen bg-bg text-text transition-colors duration-300">
+      <Navigation onComingSoon={setComingSoon} />
+      <main className="flex-1 w-full pt-18">
+        {children}
+      </main>
+      <Footer onComingSoon={setComingSoon} />
+      {comingSoon && <ComingSoonModal label={comingSoon} onClose={() => setComingSoon(null)} />}
+    </div>
+  );
+};
 
 export default MainLayout;
